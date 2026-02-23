@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Cart — Sajigaz Designs</title>
+    <link rel="icon" type="image/png" href="assets/img/product_logo.png" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" />
+</head>
+
+<body>
+
+    <div class="announcement-bar">
+        <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;">redeem</span>
+        &nbsp;Free Gift Wrapping on ₹999+&nbsp;|&nbsp;
+        <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;">local_shipping</span>
+        Fast Delivery&nbsp;|&nbsp;
+        <strong>WhatsApp: 9994583875</strong>
+    </div>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="index.html"><img src="assets/img/product_logo.png" alt="Sajigaz Designs" /></a>
+            </div>
+            <div class="search-wrap">
+                <i class="ri-search-line"></i>
+                <input type="text" class="search-input" placeholder="Search gifts…" autocomplete="off" />
+                <button class="search-btn"><i class="ri-arrow-right-line"></i></button>
+            </div>
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="category.html">Shop</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="cart.html" class="cart-btn" style="background:var(--magenta);">
+                    <i class="ri-shopping-bag-3-line"></i><span>Cart</span>
+                    <span class="cart-count">0</span>
+                </a>
+                <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+        <nav class="mobile-nav" id="mobileNav">
+            <a href="index.html"><span class="material-symbols-outlined ms-sm">home</span> Home</a>
+            <a href="category.html"><span class="material-symbols-outlined ms-sm">shopping_bag</span> Shop</a>
+            <a href="cart.html"><span class="material-symbols-outlined ms-sm">shopping_cart</span> My Cart</a>
+        </nav>
+    </header>
+
+    <!-- Cart Page -->
+    <section class="cart-page">
+        <div class="container">
+            <div style="margin-bottom:32px;">
+                <h1
+                    style="font-family:var(--ff-display);font-size:2rem;font-weight:900;color:var(--purple-dark);display:flex;align-items:center;gap:12px;">
+                    <span class="material-symbols-outlined"
+                        style="font-size:2rem;color:var(--purple);">shopping_cart</span>
+                    My Cart
+                </h1>
+                <p style="color:var(--text-muted);margin-top:4px;" id="cartSubtitle">—</p>
+            </div>
+
+            <!-- Empty state -->
+            <div class="cart-empty" id="cartEmpty" style="display:none;">
+                <div class="cart-empty-icon">
+                    <span class="material-symbols-outlined"
+                        style="font-size:4rem;color:var(--gray-200);">shopping_bag</span>
+                </div>
+                <h2>Your cart is empty!</h2>
+                <p>Looks like you haven't added any gifts yet. Start exploring!</p>
+                <a href="category.html" class="btn btn-primary btn-lg">
+                    <span class="material-symbols-outlined ms-sm">redeem</span> Browse Gifts
+                </a>
+            </div>
+
+            <!-- Cart content -->
+            <div class="cart-grid" id="cartContent" style="display:none;">
+                <!-- Items -->
+                <div>
+                    <div class="cart-items-wrap" id="cartItemsList"></div>
+                    <div
+                        style="margin-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+                        <a href="category.html" class="btn btn-outline">
+                            <i class="ri-arrow-left-line"></i> Continue Shopping
+                        </a>
+                        <button class="btn btn-sm"
+                            style="color:var(--magenta);border:1.5px solid var(--magenta);border-radius:99px;padding:8px 20px;background:rgba(225,23,63,0.06);display:inline-flex;align-items:center;gap:6px;"
+                            id="clearCartBtn">
+                            <span class="material-symbols-outlined ms-sm">delete</span> Clear Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="cart-summary">
+                    <div class="summary-title">Order Summary</div>
+                    <div class="summary-row"><span>Subtotal</span><span id="summarySubtotal">—</span></div>
+                    <div class="summary-row">
+                        <span style="display:flex;align-items:center;gap:6px;">
+                            <span class="material-symbols-outlined"
+                                style="font-size:0.9rem;color:var(--purple);">redeem</span>
+                            Gift Wrapping
+                        </span>
+                        <span style="color:var(--purple);font-weight:700;">FREE</span>
+                    </div>
+                    <div class="summary-row">
+                        <span style="display:flex;align-items:center;gap:6px;">
+                            <span class="material-symbols-outlined"
+                                style="font-size:0.9rem;color:var(--purple);">local_shipping</span>
+                            Delivery
+                        </span>
+                        <span id="summaryDelivery">—</span>
+                    </div>
+                    <div class="summary-row total"><span>Total</span><span id="summaryTotal">—</span></div>
+                    <a href="checkout.html" class="btn btn-primary btn-checkout" id="checkoutBtn">
+                        <i class="ri-secure-payment-line"></i> Proceed to Checkout
+                    </a>
+                    <a href="https://wa.me/919994583875" target="_blank"
+                        style="display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px;width:100%;background:#25D366;color:white;padding:12px;border-radius:var(--radius-sm);font-weight:700;font-size:0.9rem;">
+                        <svg viewBox="0 0 24 24" fill="white" width="18" height="18">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                        Order via WhatsApp
+                    </a>
+                    <div style="margin-top:20px;display:flex;gap:16px;justify-content:center;">
+                        <div
+                            style="text-align:center;font-size:0.72rem;color:var(--text-muted);display:flex;flex-direction:column;align-items:center;gap:3px;">
+                            <span class="material-symbols-outlined"
+                                style="font-size:1.1rem;color:var(--purple);">lock</span> Secure
+                        </div>
+                        <div
+                            style="text-align:center;font-size:0.72rem;color:var(--text-muted);display:flex;flex-direction:column;align-items:center;gap:3px;">
+                            <span class="material-symbols-outlined"
+                                style="font-size:1.1rem;color:var(--purple);">redeem</span> Gift Wrap
+                        </div>
+                        <div
+                            style="text-align:center;font-size:0.72rem;color:var(--text-muted);display:flex;flex-direction:column;align-items:center;gap:3px;">
+                            <span class="material-symbols-outlined"
+                                style="font-size:1.1rem;color:var(--purple);">local_shipping</span> Fast Ship
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom" style="padding:32px 0;">
+                <p>&copy; 2024 <a href="index.html">Sajigaz Designs</a>. All rights reserved.</p>
+                <a href="https://wa.me/919994583875" target="_blank" class="whatsapp-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    WhatsApp Us
+                </a>
+            </div>
+        </div>
+    </footer>
+    <a href="https://wa.me/919994583875" target="_blank" class="chat-fab" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+    </a>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="assets/js/products.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        function renderCartPage() {
+            const items = Cart.items;
+            const empty = document.getElementById('cartEmpty');
+            const content = document.getElementById('cartContent');
+            const subtitle = document.getElementById('cartSubtitle');
+            const itemsList = document.getElementById('cartItemsList');
+
+            if (items.length === 0) {
+                empty.style.display = 'block';
+                content.style.display = 'none';
+                subtitle.textContent = 'Your bag is empty';
+                return;
+            }
+
+            empty.style.display = 'none';
+            content.style.display = 'grid';
+            subtitle.textContent = `${Cart.getCount()} item${Cart.getCount() !== 1 ? 's' : ''} in your cart`;
+
+            itemsList.innerHTML = items.map(item => `
+        <div class="cart-item" id="cartItem-${item.id}">
+          <div class="cart-item-img">
+            <img src="${item.image}" alt="${item.name}"/>
+          </div>
+          <div>
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">${formatPrice(item.price)} each</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">
+              Total: <strong style="color:var(--purple)">${formatPrice(item.price * item.qty)}</strong>
+            </div>
+          </div>
+          <div class="cart-item-actions">
+            <div class="qty-control" style="border-color:var(--border);">
+              <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+              <span class="qty-num">${item.qty}</span>
+              <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+            </div>
+            <button class="remove-btn" onclick="removeItem(${item.id})" title="Remove">
+              <span class="material-symbols-outlined" style="font-size:1.1rem;">delete</span>
+            </button>
+          </div>
+        </div>`).join('');
+
+            const subtotal = Cart.getTotal();
+            const delivery = subtotal >= 999 ? 0 : 80;
+            document.getElementById('summarySubtotal').textContent = formatPrice(subtotal);
+            document.getElementById('summaryDelivery').textContent = delivery === 0 ? 'FREE' : formatPrice(delivery);
+            document.getElementById('summaryTotal').textContent = formatPrice(subtotal + delivery);
+
+            if (window.gsap) {
+                gsap.from('.cart-item', { opacity: 0, x: -40, duration: 0.5, stagger: 0.1, ease: 'power3.out' });
+            }
+        }
+
+        function changeQty(id, delta) {
+            const item = Cart.items.find(i => i.id === id);
+            if (item) {
+                const newQty = item.qty + delta;
+                if (newQty <= 0) removeItem(id);
+                else { Cart.updateQty(id, newQty); renderCartPage(); }
+            }
+        }
+
+        function removeItem(id) {
+            const el = document.getElementById(`cartItem-${id}`);
+            if (el && window.gsap) {
+                gsap.to(el, {
+                    opacity: 0, x: 60, height: 0, padding: 0, marginBottom: 0, duration: 0.4, ease: 'power2.in',
+                    onComplete: () => { Cart.remove(id); renderCartPage(); }
+                });
+            } else {
+                Cart.remove(id);
+                renderCartPage();
+            }
+        }
+
+        document.getElementById('clearCartBtn').addEventListener('click', () => {
+            if (confirm('Clear all items from cart?')) {
+                Cart.clear();
+                renderCartPage();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', renderCartPage);
+    </script>
+</body>
+
+</html>

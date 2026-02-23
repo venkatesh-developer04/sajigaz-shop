@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="pageTitle">Product — Sajigaz Designs</title>
+  <meta name="description" content="View gift product details at Sajigaz Designs." />
+  <link rel="icon" type="image/png" href="assets/img/product_logo.png" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" />
+</head>
+
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;">redeem</span>
+    &nbsp;Free Gift Wrapping on ₹999+&nbsp;|&nbsp;
+    <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;">local_shipping</span>
+    Fast Delivery&nbsp;|&nbsp;
+    <strong>WhatsApp: 9994583875</strong>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <a href="index.html"><img src="assets/img/product_logo.png" alt="Sajigaz Designs" /></a>
+      </div>
+      <div class="search-wrap">
+        <i class="ri-search-line"></i>
+        <input type="text" class="search-input" placeholder="Search gifts…" autocomplete="off" />
+        <button class="search-btn" aria-label="Search"><i class="ri-arrow-right-line"></i></button>
+      </div>
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="category.html" class="active">Shop</a></li>
+          <li><a href="category.html?cat=hampers">Hampers</a></li>
+          <li><a href="category.html?cat=personalized">Personalized</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a href="cart.html" class="cart-btn">
+          <i class="ri-shopping-bag-line"></i><span>Cart</span>
+          <span class="cart-count">0</span>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-nav" id="mobileNav">
+      <a href="index.html"><span class="material-symbols-outlined ms-sm">home</span> Home</a>
+      <a href="category.html"><span class="material-symbols-outlined ms-sm">shopping_bag</span> Shop All</a>
+      <a href="cart.html"><span class="material-symbols-outlined ms-sm">shopping_cart</span> My Cart</a>
+    </nav>
+  </header>
+
+  <!-- Product Detail Page -->
+  <div class="product-detail-page">
+    <div class="container">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" style="padding:16px 0 24px; display:flex; gap:8px; font-size:.85rem;"
+        aria-label="Breadcrumb">
+        <a href="index.html" style="color:var(--text-muted)">Home</a>
+        <span style="color:var(--gray-400)">/</span>
+        <a href="category.html" id="catBreadcrumb" style="color:var(--text-muted)">Shop</a>
+        <span style="color:var(--gray-400)">/</span>
+        <span style="color:var(--purple);font-weight:600" id="nameBreadcrumb">Product</span>
+      </nav>
+
+      <div class="product-detail-grid" id="productDetailGrid">
+        <div style="text-align:center;padding:80px;color:var(--text-muted);grid-column:1/-1">
+          <span class="material-symbols-outlined"
+            style="font-size:3rem;color:var(--gray-200);display:block;margin-bottom:12px;">hourglass_empty</span>
+          <p>Loading product…</p>
+        </div>
+      </div>
+
+      <!-- Related Products -->
+      <div style="margin-top:80px;">
+        <div class="section-header" style="margin-bottom:32px;">
+          <span class="section-tag">More Gifts</span>
+          <h2 class="section-title">You Might Also <span>Love</span></h2>
+        </div>
+        <div class="products-grid" id="relatedGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer condensed -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="padding:32px 0;">
+        <p>&copy; 2024 <a href="index.html">Sajigaz Designs</a>. All rights reserved.</p>
+        <a href="https://wa.me/919994583875" target="_blank" class="whatsapp-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg>
+          WhatsApp Us
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/919994583875" target="_blank" class="chat-fab" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Star renderer
+    function renderStars(rating) {
+      const full = Math.round(rating);
+      return Array(5).fill(0).map((_, i) =>
+        `<span class="material-symbols-outlined${i < full ? ' ms-fill' : ''}" style="font-size:1rem;color:var(--gold);">grade</span>`
+      ).join('');
+    }
+
+    const params = new URLSearchParams(location.search);
+    const prodId = parseInt(params.get('id'));
+    const product = getProductById(prodId);
+
+    if (!product) {
+      document.getElementById('productDetailGrid').innerHTML = `
+        <div style="text-align:center;padding:80px;grid-column:1/-1">
+          <span class="material-symbols-outlined" style="font-size:3.5rem;color:var(--gray-200);display:block;margin-bottom:16px;">sentiment_dissatisfied</span>
+          <h2 style="font-family:var(--ff-display);color:var(--purple-dark);margin-bottom:8px">Product Not Found</h2>
+          <p style="color:var(--text-muted);margin-bottom:24px">This product doesn't exist or has been removed.</p>
+          <a href="category.html" class="btn btn-primary">Browse All Gifts</a>
+        </div>`;
+    } else {
+      document.getElementById('pageTitle').textContent = `${product.name} — Sajigaz Designs`;
+      document.getElementById('catBreadcrumb').textContent = product.categoryName;
+      document.getElementById('catBreadcrumb').href = `category.html?cat=${product.category}`;
+      document.getElementById('nameBreadcrumb').textContent = product.name;
+
+      const off = getDiscountPercent(product.originalPrice, product.price);
+
+      document.getElementById('productDetailGrid').innerHTML = `
+        <!-- Gallery -->
+        <div class="product-gallery">
+          <div class="main-img-wrap" id="mainImgWrap">
+            <img src="${product.image}" alt="${product.name}" id="mainImg"/>
+          </div>
+          <div class="thumb-row">
+            ${product.images.map((img, i) => `
+              <div class="thumb ${i === 0 ? 'active' : ''}" data-img="${img}" onclick="switchImg(this)">
+                <img src="${img}" alt="thumb"/>
+              </div>`).join('')}
+            <div class="thumb" data-img="${product.image}" onclick="switchImg(this)">
+              <img src="${product.image}" alt="thumb" style="filter:sepia(0.4)"/>
+            </div>
+            <div class="thumb" data-img="${product.image}" onclick="switchImg(this)">
+              <img src="${product.image}" alt="thumb" style="filter:saturate(1.5)"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="product-detail-info">
+          <span class="detail-cat">${product.categoryName}</span>
+          <h1 class="detail-title">${product.name}</h1>
+          <div class="detail-rating">
+            <div class="stars">${renderStars(product.rating)}</div>
+            <span>${product.rating} out of 5</span>
+            <a href="#">(${product.reviews} reviews)</a>
+          </div>
+          <div class="detail-price-row">
+            <span class="detail-price-current">${formatPrice(product.price)}</span>
+            <span class="detail-price-original">${formatPrice(product.originalPrice)}</span>
+            <span class="detail-price-off">${off}% OFF</span>
+          </div>
+          <p class="detail-desc">${product.description}</p>
+
+          <div class="detail-highlights">
+            <h4>What's Included</h4>
+            <ul>
+              ${product.details.map(d => `<li>${d}</li>`).join('')}
+            </ul>
+          </div>
+
+          <div class="qty-row">
+            <span class="qty-label">Quantity:</span>
+            <div class="qty-control">
+              <button class="qty-btn" id="qtyMinus">−</button>
+              <input type="number" class="qty-num" id="qtyNum" value="1" min="1" max="99" readonly/>
+              <button class="qty-btn" id="qtyPlus">+</button>
+            </div>
+          </div>
+
+          <div class="detail-cta">
+            <button id="btn-add-to-cart" class="btn btn-primary btn-lg" data-product-id="${product.id}">
+              <i class="ri-shopping-bag-line"></i> Add to Cart
+            </button>
+            <a href="https://wa.me/919994583875?text=Hi%20Sajigaz!%20I%20want%20to%20order%20*${encodeURIComponent(product.name)}*%20(₹${product.price}).%20Please%20help%20me!"
+               target="_blank" class="btn btn-magenta btn-lg">
+              <i class="ri-whatsapp-line"></i> Order via WhatsApp
+            </a>
+          </div>
+
+          <div class="detail-trust">
+            <div class="trust-item">
+              <span class="material-symbols-outlined ms-trust" style="color:var(--purple);">redeem</span>
+              Free Gift Wrapping
+            </div>
+            <div class="trust-item">
+              <span class="material-symbols-outlined ms-trust" style="color:var(--purple);">local_shipping</span>
+              Fast Delivery
+            </div>
+            <div class="trust-item">
+              <span class="material-symbols-outlined ms-trust" style="color:var(--purple);">lock</span>
+              Secure Payment
+            </div>
+            <div class="trust-item">
+              <span class="material-symbols-outlined ms-trust" style="color:var(--purple);">eco</span>
+              Eco-friendly
+            </div>
+          </div>
+        </div>`;
+
+      // Quantity control
+      let qty = 1;
+      document.getElementById('qtyMinus').addEventListener('click', () => {
+        if (qty > 1) { qty--; document.getElementById('qtyNum').value = qty; }
+        if (window.gsap) gsap.from('#qtyNum', { scale: 0.8, duration: 0.2, ease: 'back.out(2)' });
+      });
+      document.getElementById('qtyPlus').addEventListener('click', () => {
+        qty++; document.getElementById('qtyNum').value = qty;
+        if (window.gsap) gsap.from('#qtyNum', { scale: 1.3, duration: 0.2, ease: 'back.out(2)' });
+      });
+
+      // Add to cart
+      document.getElementById('btn-add-to-cart').addEventListener('click', () => {
+        Cart.add(product.id, qty);
+      });
+
+      // GSAP entrance
+      if (window.gsap) {
+        gsap.from('.product-gallery', { opacity: 0, x: -60, duration: 0.9, ease: 'power3.out', delay: 0.1 });
+        gsap.from('.product-detail-info > *', { opacity: 0, y: 30, duration: 0.6, ease: 'power3.out', stagger: 0.08, delay: 0.2 });
+      }
+
+      // Related products
+      const related = PRODUCTS.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+      const relGrid = document.getElementById('relatedGrid');
+      if (related.length) {
+        relGrid.innerHTML = related.map(p => {
+          const o = getDiscountPercent(p.originalPrice, p.price);
+          return `
+            <div class="product-card" onclick="location.href='product.html?id=${p.id}'">
+              <div class="product-img-wrap">
+                <img src="${p.image}" alt="${p.name}" class="product-img" loading="lazy"/>
+                <span class="product-badge badge-${p.badgeType}">${p.badge}</span>
+                <button class="wishlist-btn" onclick="event.stopPropagation()" aria-label="Wishlist">
+                  <span class="material-symbols-outlined">favorite_border</span>
+                </button>
+                <div class="product-actions">
+                  <button class="btn-add-cart" onclick="event.stopPropagation(); Cart.add(${p.id})">
+                    <i class="ri-shopping-bag-line"></i> Add to Cart
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <div class="product-name">${p.name}</div>
+                <div class="product-rating">
+                  <div class="stars">${renderStars(p.rating)}</div>
+                  <span class="rating-num">${p.rating}</span>
+                </div>
+                <div class="product-price">
+                  <span class="price-current">${formatPrice(p.price)}</span>
+                  <span class="price-original">${formatPrice(p.originalPrice)}</span>
+                  <span class="price-off">${o}% off</span>
+                </div>
+              </div>
+            </div>`;
+        }).join('');
+      }
+    }
+
+    function switchImg(thumb) {
+      document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+      const img = document.getElementById('mainImg');
+      if (window.gsap) gsap.from(img, { opacity: 0, scale: 0.95, duration: 0.4, ease: 'power2.out' });
+      img.src = thumb.dataset.img;
+    }
+  </script>
+</body>
+
+</html>

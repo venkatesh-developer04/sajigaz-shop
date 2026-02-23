@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sajigaz Designs — Beyond Imagination | Gifting Store</title>
+    <meta name="description"
+        content="Sajigaz Designs — Your premium gifting destination. Explore gift hampers, personalized gifts, birthday boxes and more. Order directly via WhatsApp!" />
+    <link rel="icon" type="image/png" href="assets/img/product_logo.png" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" />
+</head>
+
+<body>
+
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-logo"><img src="assets/img/product_logo.png" alt="Sajigaz" /></div>
+        <div class="loader-bar">
+            <div class="loader-bar-fill"></div>
+        </div>
+    </div>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;">redeem</span>
+        &nbsp;Free Gift Wrapping on orders above ₹999!&nbsp;|&nbsp;
+        <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;">local_shipping</span>
+        Fast Delivery Available&nbsp;|&nbsp;
+        <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;">auto_awesome</span>
+        <strong>Call: 9994583875</strong>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/img/product_logo.png" alt="Sajigaz Designs" />
+                </a>
+            </div>
+
+            <!-- Search -->
+            <div class="search-wrap">
+                <i class="ri-search-line"></i>
+                <input type="text" class="search-input" placeholder="Search gifts, hampers, keychains…"
+                    autocomplete="off" />
+                <button class="search-btn" aria-label="Search"><i class="ri-arrow-right-line"></i></button>
+            </div>
+
+            <!-- Desktop Nav -->
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="category.html">Shop</a></li>
+                    <li><a href="category.html?cat=hampers">Hampers</a></li>
+                    <li><a href="category.html?cat=personalized">Personalized</a></li>
+                </ul>
+            </nav>
+
+            <!-- Cart + Hamburger -->
+            <div class="header-actions">
+                <a href="cart.html" class="cart-btn" id="headerCartBtn">
+                    <i class="ri-shopping-bag-line"></i>
+                    <span>Cart</span>
+                    <span class="cart-count" id="cartCountBadge">0</span>
+                </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav -->
+        <nav class="mobile-nav" id="mobileNav">
+            <a href="index.html"><span class="material-symbols-outlined ms-sm">home</span> Home</a>
+            <a href="category.html"><span class="material-symbols-outlined ms-sm">shopping_bag</span> Shop All</a>
+            <a href="category.html?cat=hampers"><span class="material-symbols-outlined ms-sm">redeem</span> Gift
+                Hampers</a>
+            <a href="category.html?cat=gift-boxes"><span class="material-symbols-outlined ms-sm">inventory_2</span> Gift
+                Boxes</a>
+            <a href="category.html?cat=personalized"><span class="material-symbols-outlined ms-sm">auto_awesome</span>
+                Personalized</a>
+            <a href="cart.html"><span class="material-symbols-outlined ms-sm">shopping_cart</span> My Cart</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ── Hero ── -->
+        <section class="hero">
+            <div class="particles" id="particles"></div>
+            <div class="hero-orb hero-orb-1"></div>
+            <div class="hero-orb hero-orb-2"></div>
+            <div class="container">
+                <div class="hero-inner">
+                    <!-- Text -->
+                    <div class="hero-content">
+                        <span class="hero-tag">
+                            <span class="material-symbols-outlined" style="font-size:0.9em;">celebration</span>
+                            Gifting Made Magical
+                        </span>
+                        <h1 class="hero-title">
+                            Gifts That <span class="accent">Surprise,</span><br />
+                            Delight &amp; <span class="accent2">Inspire</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            Discover handpicked gift hampers, personalized treasures, and premium gift boxes—
+                            curated with love by Sajigaz Designs for every celebration.
+                        </p>
+                        <div class="hero-actions">
+                            <a href="category.html" class="btn btn-gold btn-lg">
+                                <i class="ri-gift-line"></i> Shop Now
+                            </a>
+                            <a href="category.html?cat=hampers" class="btn btn-white btn-lg">
+                                View Hampers
+                            </a>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <span class="hero-stat-num">500+</span>
+                                <span class="hero-stat-label">Happy Customers</span>
+                            </div>
+                            <div class="hero-stat">
+                                <span class="hero-stat-num">50+</span>
+                                <span class="hero-stat-label">Gift Options</span>
+                            </div>
+                            <div class="hero-stat">
+                                <span class="hero-stat-num" style="display:flex;align-items:center;gap:4px;">
+                                    <span class="material-symbols-outlined ms-fill"
+                                        style="color:var(--gold-light);font-size:1.6rem;">grade</span> 4.9
+                                </span>
+                                <span class="hero-stat-label">Avg Rating</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual -->
+                    <div class="hero-visual">
+                        <div class="hero-img-wrap">
+                            <div class="hero-img-bg"></div>
+                            <img src="assets/img/products/gift_hamper.png" alt="Sajigaz Gift Hamper"
+                                class="hero-product-img" />
+                            <div class="hero-badge">
+                                <span class="material-symbols-outlined ms-badge-icon">redeem</span>
+                                Free Wrapping<br /><small>on ₹999+</small>
+                            </div>
+                            <div class="hero-badge2">
+                                <span class="material-symbols-outlined ms-badge-icon">bolt</span>
+                                Same-day<br />Delivery
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Categories ── -->
+        <section class="section categories-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-tag">Browse By</span>
+                    <h2 class="section-title">Shop by <span>Category</span></h2>
+                    <p class="section-subtitle">Find the perfect gift from our curated collections</p>
+                </div>
+                <div class="categories-grid" id="categoriesGrid"></div>
+            </div>
+        </section>
+
+        <!-- ── Products Grid ── -->
+        <section class="section products-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-tag">Explore</span>
+                    <h2 class="section-title">Our <span>Popular</span> Picks</h2>
+                    <p class="section-subtitle">Every gift tells a story. Let yours be unforgettable.</p>
+                </div>
+                <div class="products-filter-bar">
+                    <div class="filter-tabs" id="filterTabs">
+                        <button class="filter-tab active" data-cat="all">All Gifts</button>
+                        <button class="filter-tab" data-cat="hampers">Hampers</button>
+                        <button class="filter-tab" data-cat="gift-boxes">Gift Boxes</button>
+                        <button class="filter-tab" data-cat="personalized">Personalized</button>
+                    </div>
+                    <select class="sort-select" id="sortSelect">
+                        <option value="default">Sort: Featured</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="rating">Top Rated</option>
+                    </select>
+                </div>
+                <div class="products-grid" id="productsGrid"></div>
+            </div>
+        </section>
+
+        <!-- ── Featured / Scrolling ── -->
+        <!-- <section class="section featured-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-tag">Bestsellers</span>
+                    <h2 class="section-title"><span>Featured</span> Gifts</h2>
+                    <p class="section-subtitle">Our most loved picks — drag to explore</p>
+                </div>
+                <div class="featured-scroll-track" id="featuredTrack"></div>
+            </div>
+        </section> -->
+
+        <!-- ── Custom Gift Section ── -->
+        <!-- <div class="container">
+            <div class="custom-gift-wrap reveal">
+                <div class="custom-gift-text">
+                    <h2 style="display:flex;align-items:center;gap:12px;">
+                        <span class="material-symbols-outlined"
+                            style="font-size:2rem;color:var(--purple-dark);">auto_awesome</span>
+                        Made Something Special?<br />Let Us Wrap It for You!
+                    </h2>
+                    <p>Custom orders, bulk gifting &amp; personal messages — just WhatsApp us!</p>
+                </div>
+                <a href="https://wa.me/919994583875?text=Hi%20Sajigaz%20Designs!%20I%20have%20a%20custom%20gifting%20enquiry."
+                    target="_blank" class="btn btn-primary btn-lg">
+                    <i class="ri-whatsapp-line"></i> Chat with Us
+                </a>
+            </div>
+        </div> -->
+
+        <!-- ── Testimonials ── -->
+        <!-- <section class="section testimonials-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-tag">Reviews</span>
+                    <h2 class="section-title">What Our <span>Customers</span> Say</h2>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card reveal" data-delay="0">
+                        <div class="testi-stars">
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                        </div>
+                        <p class="testi-text">"The gift hamper I ordered for my best friend's birthday was absolutely
+                            stunning! The packaging was premium and the delivery was super fast. Sajigaz never
+                            disappoints!"</p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">P</div>
+                            <div>
+                                <div class="testi-name">Priya Krishnan</div>
+                                <div class="testi-loc">Chennai, TN</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card reveal" data-delay="0.15">
+                        <div class="testi-stars">
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                        </div>
+                        <p class="testi-text">"Ordered the personalized photo frame for our anniversary. The quality
+                            blew us away! And the WhatsApp ordering made it so easy. Highly recommend Sajigaz Designs!"
+                        </p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">R</div>
+                            <div>
+                                <div class="testi-name">Rajesh Mohan</div>
+                                <div class="testi-loc">Coimbatore, TN</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card reveal" data-delay="0.3">
+                        <div class="testi-stars">
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                            <span class="material-symbols-outlined ms-fill">grade</span>
+                        </div>
+                        <p class="testi-text">"Got the chocolate box and candle set combo for Diwali gifting. Everyone
+                            loved it! The presentation was just wow. Already planning my next order with Sajigaz!"</p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">A</div>
+                            <div>
+                                <div class="testi-name">Anitha Devi</div>
+                                <div class="testi-loc">Madurai, TN</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand -->
+                <div class="footer-brand">
+                    <img src="assets/img/product_logo.png" alt="Sajigaz Designs" />
+                    <p>Bringing joy through beautifully crafted gifts and hampers. Every product is packed with love and
+                        delivered with care — Sajigaz Designs, Beyond Imagination.</p>
+                    <div class="footer-socials">
+                        <a href="https://wa.me/919994583875" target="_blank" class="social-btn" title="WhatsApp">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-btn" title="Instagram">
+                            <span class="material-symbols-outlined" style="font-size:1.1rem;">photo_camera</span>
+                        </a>
+                        <a href="#" class="social-btn" title="Facebook">
+                            <span class="material-symbols-outlined" style="font-size:1.1rem;">group</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <div class="footer-links">
+                        <a href="index.html"><i class="ri-arrow-right-s-line"></i>Home</a>
+                        <a href="category.html"><i class="ri-arrow-right-s-line"></i>Shop All</a>
+                        <a href="category.html?cat=hampers"><i class="ri-arrow-right-s-line"></i>Gift Hampers</a>
+                        <a href="category.html?cat=gift-boxes"><i class="ri-arrow-right-s-line"></i>Gift Boxes</a>
+                        <a href="category.html?cat=personalized"><i class="ri-arrow-right-s-line"></i>Personalized</a>
+                    </div>
+                </div>
+
+                <!-- Help -->
+                <div class="footer-col">
+                    <h4>Help</h4>
+                    <div class="footer-links">
+                        <a href="#"><i class="ri-arrow-right-s-line"></i>How to Order</a>
+                        <a href="#"><i class="ri-arrow-right-s-line"></i>Delivery Info</a>
+                        <a href="#"><i class="ri-arrow-right-s-line"></i>Return Policy</a>
+                        <a href="#"><i class="ri-arrow-right-s-line"></i>Custom Orders</a>
+                        <a href="#"><i class="ri-arrow-right-s-line"></i>Bulk Orders</a>
+                    </div>
+                </div>
+
+                <!-- Support -->
+                <div class="footer-col footer-support">
+                    <h4>Get in Touch</h4>
+                    <p>
+                        <span class="icon"><span class="material-symbols-outlined">phone_android</span></span>
+                        <span><strong>WhatsApp / Call</strong>
+                            <a href="tel:9994583875">+91 9994583875</a></span>
+                    </p>
+                    <p>
+                        <span class="icon"><span class="material-symbols-outlined">schedule</span></span>
+                        <span><strong>Working Hours</strong>Mon–Sat: 9 AM – 8 PM</span>
+                    </p>
+                    <p>
+                        <span class="icon"><span class="material-symbols-outlined">inventory_2</span></span>
+                        <span><strong>Delivery</strong>Tamil Nadu &amp; Pan India</span>
+                    </p>
+                    <a href="https://wa.me/919994583875?text=Hi%20Sajigaz%20Designs!%20I%20want%20to%20know%20more."
+                        target="_blank" class="whatsapp-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                        Chat on WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 <a href="#">Sajigaz Designs</a>. All rights reserved. Made with
+                    <span class="material-symbols-outlined ms-fill"
+                        style="color:var(--magenta);font-size:0.9rem;vertical-align:middle;">favorite</span>
+                    in Tamil Nadu.
+                </p>
+                <div class="footer-badges">
+                    <span class="footer-badge">
+                        <span class="material-symbols-outlined">lock</span> Secure
+                    </span>
+                    <span class="footer-badge">
+                        <span class="material-symbols-outlined">grade</span> Trusted
+                    </span>
+                    <span class="footer-badge">
+                        <span class="material-symbols-outlined">eco</span> Eco-friendly
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp FAB -->
+    <a href="https://wa.me/919994583875?text=Hi%20Sajigaz%20Designs!%20I%E2%80%99d%20like%20to%20order%20a%20gift."
+        target="_blank" class="chat-fab" title="Chat with us on WhatsApp" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="assets/js/products.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        // ── Category Icon Map ──
+        const CAT_ICONS = { hampers: 'redeem', 'gift-boxes': 'inventory_2', personalized: 'auto_awesome' };
+
+        // ── Build Categories Grid ──
+        (function () {
+            const grid = document.getElementById('categoriesGrid');
+            if (!grid) return;
+            CATEGORIES.forEach(cat => {
+                const iconName = CAT_ICONS[cat.id] || 'redeem';
+                grid.innerHTML += `
+          <div class="category-card" style="--cat-color:${cat.color}" onclick="location.href='category.html?cat=${cat.id}'">
+            <div class="cat-icon"><span class="material-symbols-outlined">${iconName}</span></div>
+            <div class="cat-name">${cat.name}</div>
+            <div class="cat-desc">${cat.description}</div>
+            <span class="cat-count">${cat.count} products</span>
+          </div>`;
+            });
+        })();
+
+        // ── Render stars as Material Symbols ──
+        function renderStars(rating) {
+            const full = Math.round(rating);
+            return Array(5).fill(0).map((_, i) =>
+                `<span class="material-symbols-outlined${i < full ? ' ms-fill' : ''}" style="font-size:0.9rem;color:var(--gold);">grade</span>`
+            ).join('');
+        }
+
+        // ── Build Products Grid ──
+        function buildProductCard(p) {
+            const off = getDiscountPercent(p.originalPrice, p.price);
+            return `
+        <div class="product-card" data-product-id="${p.id}" onclick="location.href='product.html?id=${p.id}'">
+          <div class="product-img-wrap">
+            <img src="${p.image}" alt="${p.name}" class="product-img" loading="lazy"/>
+            <span class="product-badge badge-${p.badgeType}">${p.badge}</span>
+            <button class="wishlist-btn" onclick="event.stopPropagation()" aria-label="Wishlist">
+              <span class="material-symbols-outlined">favorite_border</span>
+            </button>
+            <div class="product-actions">
+              <button class="btn-add-cart" onclick="event.stopPropagation(); Cart.add(${p.id})">
+                <i class="ri-shopping-bag-line"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat">${p.categoryName}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-rating">
+              <div class="stars">${renderStars(p.rating)}</div>
+              <span class="rating-num">${p.rating} (${p.reviews})</span>
+            </div>
+            <div class="product-price">
+              <span class="price-current">${formatPrice(p.price)}</span>
+              <span class="price-original">${formatPrice(p.originalPrice)}</span>
+              <span class="price-off">${off}% off</span>
+            </div>
+          </div>
+        </div>`;
+        }
+
+        function renderProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+            if (products.length === 0) {
+                grid.innerHTML = `<div class="no-products"><div class="icon"><span class="material-symbols-outlined">search_off</span></div><h3>No products found</h3><p>Try a different filter or search term</p></div>`;
+                return;
+            }
+            grid.innerHTML = products.map(buildProductCard).join('');
+        }
+
+        (function () {
+            renderProducts(PRODUCTS);
+
+            // Filter tabs
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.addEventListener('click', function () {
+                    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    const cat = this.dataset.cat;
+                    let products = getProductsByCategory(cat === 'all' ? null : cat);
+                    applySort(products);
+                });
+            });
+
+            // Sort
+            document.getElementById('sortSelect')?.addEventListener('change', function () {
+                const activeCat = document.querySelector('.filter-tab.active')?.dataset.cat;
+                let products = getProductsByCategory(activeCat === 'all' ? null : activeCat);
+                applySort(products);
+            });
+
+            function applySort(products) {
+                const sort = document.getElementById('sortSelect')?.value || 'default';
+                let sorted = [...products];
+                if (sort === 'price-asc') sorted.sort((a, b) => a.price - b.price);
+                if (sort === 'price-desc') sorted.sort((a, b) => b.price - a.price);
+                if (sort === 'rating') sorted.sort((a, b) => b.rating - a.rating);
+                renderProducts(sorted);
+            }
+        })();
+
+        // ── Build Featured Scroll Track ──
+        (function () {
+            const track = document.getElementById('featuredTrack');
+            if (!track) return;
+            getFeaturedProducts().forEach(p => {
+                track.innerHTML += `
+          <div class="featured-card" onclick="location.href='product.html?id=${p.id}'">
+            <div class="featured-img-wrap">
+              <img src="${p.image}" alt="${p.name}" class="featured-img" loading="lazy"/>
+            </div>
+            <div class="featured-body">
+              <div class="featured-name">${p.name}</div>
+              <div class="featured-price">${formatPrice(p.price)}</div>
+            </div>
+          </div>`;
+            });
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout — Sajigaz Designs</title>
+    <link rel="icon" type="image/png" href="assets/img/product_logo.png" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" />
+    <style>
+        .confetti-piece {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            border-radius: 2px;
+            animation: confettiFall 1.4s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-20px) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(80vh) rotate(720deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .success-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(92, 45, 145, 0.92);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .success-icon {
+            margin-bottom: 24px;
+            animation: successPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .success-icon .material-symbols-outlined {
+            font-size: 5rem;
+            color: var(--gold-light);
+            font-variation-settings: 'FILL' 1, 'wght' 100, 'GRAD' 0, 'opsz' 48;
+        }
+
+        @keyframes successPop {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        .success-title {
+            font-family: var(--ff-display);
+            font-size: 2rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .success-sub {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .success-wa-btn {
+            background: #25D366;
+            color: white;
+            padding: 16px 36px;
+            border-radius: 99px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-bottom: 16px;
+            transition: transform 0.2s;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+            border: none;
+            font-family: inherit;
+        }
+
+        .success-wa-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .success-close-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 99px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: background 0.2s;
+            margin-top: 8px;
+        }
+
+        .success-close-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="announcement-bar">
+        <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;">redeem</span>
+        &nbsp;Free Gift Wrapping on ₹999+&nbsp;|&nbsp;Orders confirmed via WhatsApp
+        <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;">check_circle</span>
+    </div>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="index.html"><img src="assets/img/product_logo.png" alt="Sajigaz Designs" /></a>
+            </div>
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="category.html">Shop</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="cart.html" class="cart-btn">
+                    <i class="ri-shopping-bag-line"></i><span>Cart</span>
+                    <span class="cart-count">0</span>
+                </a>
+                <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+        <nav class="mobile-nav" id="mobileNav">
+            <a href="index.html"><span class="material-symbols-outlined ms-sm">home</span> Home</a>
+            <a href="category.html"><span class="material-symbols-outlined ms-sm">shopping_bag</span> Shop</a>
+            <a href="cart.html"><span class="material-symbols-outlined ms-sm">shopping_cart</span> Cart</a>
+        </nav>
+    </header>
+
+    <!-- Checkout Page -->
+    <div class="checkout-page">
+        <div class="container">
+            <!-- Page Title -->
+            <div style="margin-bottom:32px;">
+                <nav class="breadcrumb" style="font-size:.85rem;display:flex;gap:8px;margin-bottom:12px;">
+                    <a href="index.html" style="color:var(--text-muted)">Home</a>
+                    <span style="color:var(--gray-400)">/</span>
+                    <a href="cart.html" style="color:var(--text-muted)">Cart</a>
+                    <span style="color:var(--gray-400)">/</span>
+                    <span style="color:var(--purple);font-weight:600">Checkout</span>
+                </nav>
+                <h1
+                    style="font-family:var(--ff-display);font-size:2rem;font-weight:900;color:var(--purple-dark);display:flex;align-items:center;gap:12px;">
+                    <span class="material-symbols-outlined"
+                        style="font-size:2rem;color:var(--purple);">assignment</span>
+                    Complete Your Order
+                </h1>
+                <p style="color:var(--text-muted);margin-top:4px;">
+                    Fill in your details — we'll send your order directly to WhatsApp for confirmation!
+                </p>
+            </div>
+
+            <!-- Empty Cart Redirect -->
+            <div id="emptyCheckout" style="display:none;text-align:center;padding:80px 20px;">
+                <span class="material-symbols-outlined"
+                    style="font-size:3.5rem;color:var(--gray-200);display:block;margin-bottom:16px;">shopping_cart</span>
+                <h2 style="font-family:var(--ff-display);color:var(--purple-dark);margin-bottom:8px;">Your Cart is Empty
+                </h2>
+                <p style="color:var(--text-muted);margin-bottom:24px;">Add some gifts first before checking out!</p>
+                <a href="category.html" class="btn btn-primary btn-lg">
+                    <span class="material-symbols-outlined ms-sm">redeem</span> Browse Gifts
+                </a>
+            </div>
+
+            <div class="checkout-grid" id="checkoutContent">
+                <!-- Form -->
+                <div class="checkout-form-wrap">
+                    <div class="form-title">Your Details</div>
+                    <p class="form-subtitle" style="display:flex;align-items:center;gap:6px;">
+                        <svg viewBox="0 0 24 24" fill="#25D366" width="18" height="18">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                        We'll use these to confirm your order on WhatsApp
+                    </p>
+
+                    <form id="checkoutForm" novalidate>
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" class="form-control" placeholder="e.g. Priya"
+                                    required />
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" class="form-control" placeholder="e.g. Kumar" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" style="display:flex;align-items:center;gap:5px;">
+                                <span class="material-symbols-outlined"
+                                    style="font-size:0.9rem;color:var(--purple);">phone_android</span>
+                                WhatsApp / Phone Number *
+                            </label>
+                            <input type="tel" id="phone" class="form-control" placeholder="e.g. 9994583875"
+                                pattern="[0-9\+\-\s]{10,15}" maxlength="15" required />
+                            <small
+                                style="color:var(--text-muted);font-size:0.78rem;margin-top:4px;display:flex;align-items:center;gap:4px;">
+                                <span class="material-symbols-outlined" style="font-size:0.85rem;">info</span>
+                                We'll send your order confirmation to this number
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address" style="display:flex;align-items:center;gap:5px;">
+                                <span class="material-symbols-outlined"
+                                    style="font-size:0.9rem;color:var(--purple);">location_on</span>
+                                Delivery Address *
+                            </label>
+                            <textarea id="address" class="form-control"
+                                placeholder="House / Flat No., Street, Area, City, Pincode" rows="3"
+                                required></textarea>
+                        </div>
+
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="occasion" style="display:flex;align-items:center;gap:5px;">
+                                    <span class="material-symbols-outlined"
+                                        style="font-size:0.9rem;color:var(--purple);">celebration</span>
+                                    Occasion
+                                </label>
+                                <select id="occasion" class="form-control" style="cursor:pointer;">
+                                    <option value="">Select occasion</option>
+                                    <option value="Birthday">Birthday</option>
+                                    <option value="Anniversary">Anniversary</option>
+                                    <option value="Wedding">Wedding</option>
+                                    <option value="Baby Shower">Baby Shower</option>
+                                    <option value="Diwali">Diwali</option>
+                                    <option value="Christmas">Christmas</option>
+                                    <option value="Just Because">Just Because</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="deliveryDate" style="display:flex;align-items:center;gap:5px;">
+                                    <span class="material-symbols-outlined"
+                                        style="font-size:0.9rem;color:var(--purple);">calendar_today</span>
+                                    Preferred Delivery Date
+                                </label>
+                                <input type="date" id="deliveryDate" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="giftMsg" style="display:flex;align-items:center;gap:5px;">
+                                <span class="material-symbols-outlined"
+                                    style="font-size:0.9rem;color:var(--purple);">mail</span>
+                                Gift Message (optional)
+                            </label>
+                            <textarea id="giftMsg" class="form-control"
+                                placeholder="Write a heartfelt message to go with your gift" rows="2"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="specialReq" style="display:flex;align-items:center;gap:5px;">
+                                <span class="material-symbols-outlined"
+                                    style="font-size:0.9rem;color:var(--purple);">edit_note</span>
+                                Special Requirements
+                            </label>
+                            <input type="text" id="specialReq" class="form-control"
+                                placeholder="e.g. Add extra chocolates, specific colour preference…" />
+                        </div>
+
+                        <!-- WhatsApp Submit Button -->
+                        <button type="submit" class="btn-whatsapp-order" id="placeOrderBtn">
+                            <svg viewBox="0 0 24 24" fill="white" width="22" height="22">
+                                <path
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                            </svg>
+                            Send Order on WhatsApp
+                        </button>
+
+                        <p
+                            style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:12px;display:flex;align-items:center;justify-content:center;gap:5px;">
+                            <span class="material-symbols-outlined" style="font-size:0.9rem;">lock</span>
+                            Your details are only used to process your order. We never spam!
+                        </p>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div>
+                    <div class="cart-summary" style="position:sticky;top:100px;">
+                        <div class="summary-title" style="display:flex;align-items:center;gap:8px;">
+                            <span class="material-symbols-outlined"
+                                style="font-size:1.2rem;color:var(--purple);">shopping_bag</span>
+                            Order Summary
+                        </div>
+                        <div class="order-items-list" id="orderItemsList"
+                            style="margin-bottom:20px;max-height:360px;overflow-y:auto;"></div>
+                        <div class="summary-row"><span>Subtotal</span><span id="coSubtotal">—</span></div>
+                        <div class="summary-row">
+                            <span style="display:flex;align-items:center;gap:5px;">
+                                <span class="material-symbols-outlined"
+                                    style="font-size:0.85rem;color:var(--purple);">redeem</span>
+                                Gift Wrapping
+                            </span>
+                            <span style="color:var(--purple);font-weight:700;">FREE</span>
+                        </div>
+                        <div class="summary-row">
+                            <span style="display:flex;align-items:center;gap:5px;">
+                                <span class="material-symbols-outlined"
+                                    style="font-size:0.85rem;color:var(--purple);">local_shipping</span>
+                                Delivery
+                            </span>
+                            <span id="coDelivery">—</span>
+                        </div>
+                        <div class="summary-row total"><span>Total Payable</span><span id="coTotal">—</span></div>
+                        <div
+                            style="background:var(--gray-100);border-radius:var(--radius-sm);padding:12px 16px;margin-top:16px;font-size:0.82rem;color:var(--gray-600);line-height:1.6;display:flex;gap:8px;align-items:flex-start;">
+                            <span class="material-symbols-outlined"
+                                style="font-size:1rem;color:var(--purple);flex-shrink:0;margin-top:1px;">info</span>
+                            Payment on delivery or via UPI — owner will confirm after WhatsApp message.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom" style="padding:32px 0;">
+                <p>&copy; 2024 <a href="index.html">Sajigaz Designs</a>. All rights reserved.</p>
+                <a href="https://wa.me/919994583875" target="_blank" class="whatsapp-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    WhatsApp Us
+                </a>
+            </div>
+        </div>
+    </footer>
+    <a href="https://wa.me/919994583875" target="_blank" class="chat-fab" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+    </a>
+
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-icon">
+            <span class="material-symbols-outlined">celebration</span>
+        </div>
+        <div class="success-title">Order Sent!</div>
+        <p class="success-sub">
+            Your order details have been prepared for WhatsApp.<br />
+            Click below to send it to <strong>Sajigaz Designs</strong> and we'll confirm it shortly!
+        </p>
+        <a class="success-wa-btn" id="successWaLink" href="#" target="_blank">
+            <svg viewBox="0 0 24 24" fill="white" width="22" height="22">
+                <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Open WhatsApp &amp; Send
+        </a>
+        <button class="success-close-btn" onclick="closeSuccess()">
+            <i class="ri-arrow-left-line"></i> Back to Shop
+        </button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="assets/js/products.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        const OWNER_WHATSAPP = '919994583875';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const items = Cart.items;
+
+            if (items.length === 0) {
+                document.getElementById('emptyCheckout').style.display = 'block';
+                document.getElementById('checkoutContent').style.display = 'none';
+                return;
+            }
+
+            // Render order summary
+            const orderList = document.getElementById('orderItemsList');
+            orderList.innerHTML = items.map(item => `
+        <div class="order-item-row">
+          <img src="${item.image}" alt="${item.name}" class="order-item-img"/>
+          <div style="flex:1;min-width:0;">
+            <div class="order-item-name">${item.name}</div>
+            <div class="order-item-qty">Qty: ${item.qty}</div>
+          </div>
+          <div class="order-item-price">${formatPrice(item.price * item.qty)}</div>
+        </div>`).join('');
+
+            const subtotal = Cart.getTotal();
+            const delivery = subtotal >= 999 ? 0 : 80;
+            const total = subtotal + delivery;
+            document.getElementById('coSubtotal').textContent = formatPrice(subtotal);
+            document.getElementById('coDelivery').textContent = delivery === 0 ? 'FREE' : formatPrice(delivery);
+            document.getElementById('coTotal').textContent = formatPrice(total);
+
+            // Set min date for delivery
+            const today = new Date();
+            today.setDate(today.getDate() + 1);
+            document.getElementById('deliveryDate').min = today.toISOString().split('T')[0];
+
+            // GSAP entrance
+            if (window.gsap) {
+                gsap.from('.checkout-form-wrap', { opacity: 0, x: -50, duration: 0.8, ease: 'power3.out' });
+                gsap.from('.cart-summary', { opacity: 0, x: 50, duration: 0.8, ease: 'power3.out', delay: 0.15 });
+            }
+        });
+
+        // Form submission
+        document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const occasion = document.getElementById('occasion').value;
+            const deliveryDate = document.getElementById('deliveryDate').value;
+            const giftMsg = document.getElementById('giftMsg').value.trim();
+            const specialReq = document.getElementById('specialReq').value.trim();
+
+            // Basic validation
+            if (!firstName) { showFieldError('firstName', 'Please enter your first name'); return; }
+            if (!phone || phone.replace(/\D/g, '').length < 10) { showFieldError('phone', 'Please enter a valid phone number'); return; }
+            if (!address) { showFieldError('address', 'Please enter your delivery address'); return; }
+
+            const items = Cart.items;
+            const subtotal = Cart.getTotal();
+            const delivery = subtotal >= 999 ? 0 : 80;
+            const total = subtotal + delivery;
+
+            // Build WhatsApp message
+            let msg = `*New Order — Sajigaz Designs*\n`;
+            msg += `━━━━━━━━━━━━━━━━━━\n`;
+            msg += `*Customer Details*\n`;
+            msg += `Name: ${firstName} ${lastName}\n`;
+            msg += `Phone: ${phone}\n`;
+            msg += `Address: ${address}\n`;
+            if (occasion) msg += `Occasion: ${occasion}\n`;
+            if (deliveryDate) msg += `Delivery Date: ${deliveryDate}\n`;
+            msg += `\n*Order Items*\n`;
+            msg += `━━━━━━━━━━━━━━━━━━\n`;
+            items.forEach(item => {
+                msg += `• ${item.name} x${item.qty} = ${formatPrice(item.price * item.qty)}\n`;
+            });
+            msg += `━━━━━━━━━━━━━━━━━━\n`;
+            msg += `Subtotal: ${formatPrice(subtotal)}\n`;
+            msg += `Delivery: ${delivery === 0 ? 'FREE' : formatPrice(delivery)}\n`;
+            msg += `*Total: ${formatPrice(total)}*\n`;
+            if (giftMsg) msg += `\nGift Message: "${giftMsg}"\n`;
+            if (specialReq) msg += `Special Request: ${specialReq}\n`;
+            msg += `\nPlease confirm my order. Thank you!`;
+
+            const waUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+
+            // Confetti burst — CSS geometric shapes
+            launchConfetti();
+
+            // Show success overlay
+            const overlay = document.getElementById('successOverlay');
+            overlay.classList.add('show');
+            document.getElementById('successWaLink').href = waUrl;
+
+            // GSAP overlay animation
+            if (window.gsap) {
+                gsap.from('.success-icon', { scale: 0, duration: 0.6, ease: 'back.out(3)', delay: 0.1 });
+                gsap.from('.success-title', { opacity: 0, y: 20, duration: 0.5, ease: 'power3.out', delay: 0.3 });
+                gsap.from('.success-sub', { opacity: 0, y: 20, duration: 0.5, ease: 'power3.out', delay: 0.4 });
+                gsap.from('.success-wa-btn', { opacity: 0, y: 20, duration: 0.5, ease: 'power3.out', delay: 0.5 });
+            }
+
+            setTimeout(() => Cart.clear(), 3000);
+        });
+
+        function showFieldError(fieldId, msg) {
+            const field = document.getElementById(fieldId);
+            field.style.borderColor = 'var(--magenta)';
+            field.style.boxShadow = '0 0 0 3px rgba(225,23,63,0.15)';
+            field.focus();
+            Cart.showToast(msg);
+            if (window.gsap) gsap.from(field, { x: -8, duration: 0.25, ease: 'elastic.out(4,0.5)', repeat: 3, yoyo: true });
+            setTimeout(() => {
+                field.style.borderColor = '';
+                field.style.boxShadow = '';
+            }, 3000);
+        }
+
+        function launchConfetti() {
+            const colors = ['#5C2D91', '#E1173F', '#F5A623', '#FFD166', '#FF6B9D', '#7B3FC7'];
+            for (let i = 0; i < 60; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + 'vw';
+                piece.style.top = '-20px';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDelay = (Math.random() * 0.6) + 's';
+                piece.style.animationDuration = (1 + Math.random() * 0.8) + 's';
+                piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                piece.style.width = (8 + Math.random() * 10) + 'px';
+                piece.style.height = (8 + Math.random() * 10) + 'px';
+                document.body.appendChild(piece);
+                setTimeout(() => piece.remove(), 2000);
+            }
+        }
+
+        function closeSuccess() {
+            document.getElementById('successOverlay').classList.remove('show');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>
