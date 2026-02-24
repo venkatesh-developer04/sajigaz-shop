@@ -26,44 +26,74 @@
 
     <!-- Header -->
     <header class="site-header">
-        <div class="container header-inner">
-            <div class="logo">
-                <a href="index.html"><img src="assets/img/product_logo.png" alt="Sajigaz Designs" /></a>
-            </div>
-            <div class="search-wrap">
-                <i class="ri-search-line"></i>
-                <input type="text" class="search-input" id="searchInput" placeholder="Search gifts…"
-                    autocomplete="off" />
-                <button class="search-btn" aria-label="Search"><i class="ri-arrow-right-line"></i></button>
-            </div>
-            <nav class="main-nav">
-                <ul class="nav-links">
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="category.html">Shop All</a></li>
-                    <li><a href="category.html?cat=personalized">Photo Magnet</a></li>
-                    <li><a href="bulk-order.html">Bulk Order</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <a href="cart.html" class="cart-btn">
-                    <i class="ri-shopping-bag-line"></i><span>Cart</span>
-                    <span class="cart-count">0</span>
-                </a>
-                <button class="hamburger" id="hamburger" aria-label="Menu">
-                    <span></span><span></span><span></span>
-                </button>
-            </div>
+      <div class="container header-inner">
+        <!-- Logo -->
+        <div class="logo">
+          <a href="index.html">
+            <img src="assets/img/product_logo.png" alt="Sajigaz Designs" />
+          </a>
         </div>
-        <nav class="mobile-nav" id="mobileNav">
-            <a href="index.html"><span class="material-symbols-outlined ms-sm">home</span> Home</a>
-            <a href="category.html"><span class="material-symbols-outlined ms-sm">shopping_bag</span> Shop All</a>
-            <a href="category.html?cat=hampers"><span class="material-symbols-outlined ms-sm">redeem</span> Hampers</a>
-            <a href="category.html?cat=gift-boxes"><span class="material-symbols-outlined ms-sm">inventory_2</span> Gift
-                Boxes</a>
-            <a href="category.html?cat=personalized"><span class="material-symbols-outlined ms-sm">auto_awesome</span>
-                Photo Magnet</a>
-            <a href="cart.html"><span class="material-symbols-outlined ms-sm">shopping_cart</span> My Cart</a>
+
+        <!-- Search -->
+        <div class="search-wrap">
+          <i class="ri-search-line"></i>
+          <input type="text" class="search-input" placeholder="Search gifts, hampers, keychains…" autocomplete="off" />
+          <button class="search-btn" aria-label="Search"><i class="ri-arrow-right-line"></i></button>
+        </div>
+
+        <!-- Desktop Nav -->
+        <nav class="main-nav">
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="category.html">Shop All</a></li>
+            <li><a href="product.html">Products</a></li>
+            <li><a href="bulk-order.html">Bulk Order</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
         </nav>
+
+        <!-- Cart + Hamburger -->
+        <div class="header-actions">
+          <a href="cart.html" class="cart-btn" id="headerCartBtn">
+            <i class="ri-shopping-bag-line"></i>
+            <span>Cart</span>
+            <span class="cart-count" id="cartCountBadge">0</span>
+          </a>
+          <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Nav -->
+      <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html">
+          <span class="material-symbols-outlined ms-sm">home</span>
+          Home
+        </a>
+        <a href="category.html">
+          <span class="material-symbols-outlined ms-sm">shopping_bag</span>
+          Shop All
+        </a>
+        <a href="product.html">
+          <span class="material-symbols-outlined ms-sm">redeem</span>
+          Products
+        </a>
+        <a href="bulk-order.html">
+          <span class="material-symbols-outlined ms-sm">inventory_2</span>
+          Bulk Order
+        </a>
+        <a href="contact.html">
+          <span class="material-symbols-outlined ms-sm">auto_awesome</span>
+          Contact Us
+        </a>
+        <a href="cart.html">
+          <span class="material-symbols-outlined ms-sm">shopping_cart</span>
+          My Cart
+        </a>
+      </nav>
     </header>
 
     <!-- Page Hero -->
@@ -205,11 +235,11 @@
                 return;
             }
             grid.innerHTML = products.map(buildProductCard).join('');
-            if (window.gsap && window.ScrollTrigger) {
-                document.querySelectorAll('.product-card').forEach((card, i) => {
-                    gsap.from(card, { opacity: 0, y: 50, scale: 0.93, duration: 0.6, ease: 'power3.out', delay: (i % 4) * 0.08 });
-                });
-            }
+            // if (window.gsap && window.ScrollTrigger) {
+            //     document.querySelectorAll('.product-card').forEach((card, i) => {
+            //         gsap.from(card, { opacity: 0, y: 50, scale: 0.93, duration: 0.6, ease: 'power3.out', delay: (i % 4) * 0.08 });
+            //     });
+            // }
         }
 
         function getFiltered() {
