@@ -44,8 +44,10 @@ function initScrollReveal() {
 
 // ── GSAP animations ──
 function initGSAP() {
-    if (!window.gsap) return;
+  if (!window.gsap) return;
+  if (typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
+  }
 
     // Hero text entrance
     const heroTitle = document.querySelector('.hero-title');

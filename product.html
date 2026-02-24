@@ -9,6 +9,10 @@
   <link rel="icon" type="image/png" href="assets/img/product_logo.png" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" />
+  <script>
+    UPLOADCARE_PUBLIC_KEY = 'demopublickey';
+  </script>
+  <script src="https://ucarecdn.com/libs/widget/3.8.1/uploadcare.full.min.js" charset="utf-8"></script>
 </head>
 
 <body>
@@ -35,10 +39,10 @@
       </div>
       <nav class="main-nav">
         <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="category.html" class="active">Shop</a></li>
-          <li><a href="category.html?cat=hampers">Hampers</a></li>
-          <li><a href="category.html?cat=personalized">Personalized</a></li>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="category.html">Shop All</a></li>
+          <li><a href="category.html?cat=personalized">Photo Magnet</a></li>
+          <li><a href="bulk-order.html">Bulk Order</a></li>
         </ul>
       </nav>
       <div class="header-actions">
@@ -171,15 +175,15 @@
         <div class="product-detail-info">
           <span class="detail-cat">${product.categoryName}</span>
           <h1 class="detail-title">${product.name}</h1>
-          <div class="detail-rating">
+          <!-- <div class="detail-rating">
             <div class="stars">${renderStars(product.rating)}</div>
             <span>${product.rating} out of 5</span>
             <a href="#">(${product.reviews} reviews)</a>
-          </div>
+          </div> -->
           <div class="detail-price-row">
             <span class="detail-price-current">${formatPrice(product.price)}</span>
-            <span class="detail-price-original">${formatPrice(product.originalPrice)}</span>
-            <span class="detail-price-off">${off}% OFF</span>
+            <!-- <span class="detail-price-original">${formatPrice(product.originalPrice)}</span> -->
+            <!-- <span class="detail-price-off">${off}% OFF</span> -->
           </div>
           <p class="detail-desc">${product.description}</p>
 
@@ -199,12 +203,38 @@
             </div>
           </div>
 
+          ${product.category === 'Photomagnet' ? `
+          <div class="custom-image-upload" style="margin-top:20px;margin-bottom:20px;background:var(--gray-50);padding:16px;border-radius:12px;border:1px dashed var(--gray-300);">
+            <label style="display:flex;align-items:center;gap:8px;font-weight:600;margin-bottom:12px;color:var(--purple-dark);">
+              <span class="material-symbols-outlined" style="font-size:1.2rem;color:var(--purple);">upload_file</span>
+              Upload Images for Photo Magnet
+            </label>
+            
+            <div style="margin-bottom:12px;">
+              <span style="font-size:0.9rem;font-weight:500;color:var(--gray-600);display:block;margin-bottom:6px;">Select Number of Photos:</span>
+              <select id="photoCountSelect" class="form-control" style="width:100px;cursor:pointer;padding:8px;">
+                 <option value="1">1</option>
+                 <option value="2">2</option>
+                 <option value="4">4</option>
+                 <option value="6">6</option>
+                 <option value="8">8</option>
+                 <option value="12">12</option>
+              </select>
+            </div>
+
+            <input type="hidden" role="uploadcare-uploader" id="customImageUcare" data-images-only="true" data-multiple="true" data-multiple-min="1" data-multiple-max="12"/>
+            <div id="customImagePreview" style="margin-top:12px;display:none;flex-wrap:wrap;gap:8px;">
+            </div>
+            <small style="color:var(--text-muted);font-size:0.8rem;display:block;margin-top:8px;">Upload multiple photos. Crop, rotate, and enhance colors after selecting!</small>
+          </div>
+          ` : ''}
+
           <div class="detail-cta">
             <button id="btn-add-to-cart" class="btn btn-primary btn-lg" data-product-id="${product.id}">
               <i class="ri-shopping-bag-line"></i> Add to Cart
             </button>
             <a href="https://wa.me/919994583875?text=Hi%20Sajigaz!%20I%20want%20to%20order%20*${encodeURIComponent(product.name)}*%20(₹${product.price}).%20Please%20help%20me!"
-               target="_blank" class="btn btn-magenta btn-lg">
+               target="_blank" class="btn btn-magenta btn-lg" id="btn-wa-direct">
               <i class="ri-whatsapp-line"></i> Order via WhatsApp
             </a>
           </div>
@@ -240,9 +270,107 @@
         if (window.gsap) gsap.from('#qtyNum', { scale: 1.3, duration: 0.2, ease: 'back.out(2)' });
       });
 
+      // Personalization image logic
+      let customImageB64 = null;
+      if (product.category === 'personalized') {
+        const previewDiv = document.getElementById('customImagePreview');
+        const waBtn = document.getElementById('btn-wa-direct');
+        const photoCountSelect = document.getElementById('photoCountSelect');
+        const input = document.getElementById('customImageUcare');
+
+        let widgetInstance = uploadcare.Widget(input);
+
+        photoCountSelect.addEventListener('change', (e) => {
+          const val = parseInt(e.target.value);
+
+          // Destroy old widget
+          if (widgetInstance) {
+            widgetInstance.destroy();
+          }
+
+          // Update attributes BEFORE re-init
+          input.setAttribute('data-multiple', 'true');
+          input.setAttribute('data-multiple-max', val);
+          input.setAttribute('data-multiple-min', val);
+
+          // Recreate widget
+          widgetInstance = uploadcare.Widget(input);
+        });
+
+        if (window.uploadcare) {
+          // Enable photo editing effects: crop, rotate, color adjustments
+          uploadcare.plugin(function (core) {
+            core.settings.effects = 'crop,rotate,enhance,sharp,grayscale';
+          });
+
+          const widget = uploadcare.MultipleWidget('#customImageUcare');
+          window.widgetInstance = widget;
+
+          widget.onUploadComplete(function (info) {
+            const cdnUrls = [];
+            previewDiv.innerHTML = '';
+
+            // info.uuid for multiple is a group ID. info.count has the total files.
+            const files = info.count;
+            // Unfortunately multiple widget complete 'info' doesn't contain the raw URLs. 
+            // We get them from the group object directly.
+            const p = uploadcare.loadFileGroup(info.uuid);
+            p.done(function (fileGroup) {
+              const promises = fileGroup.files();
+              Promise.all(promises).then(function (filesArr) {
+                filesArr.forEach(f => {
+                  cdnUrls.push(f.cdnUrl);
+                  const img = document.createElement('img');
+                  img.src = f.cdnUrl + '-/preview/100x100/';
+                  img.style.cssText = 'max-width:80px;border-radius:8px;border:1px solid var(--gray-300);';
+                  previewDiv.appendChild(img);
+                });
+
+                // Save list as comma-separated string
+                customImageB64 = cdnUrls.join(',');
+                previewDiv.style.display = 'flex';
+
+                if (waBtn) {
+                  const isMob = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                  let baseText = `Hi Sajigaz! I want to order *${product.name}* (₹${product.price}). \n\n*My Custom Images (${cdnUrls.length}):*\n`;
+                  cdnUrls.forEach(u => baseText += u + '\\n');
+
+                  if (isMob) {
+                    waBtn.href = `https://wa.me/919994583875?text=${encodeURIComponent(baseText)}`;
+                  } else {
+                    waBtn.href = `https://web.whatsapp.com/send?phone=919994583875&text=${encodeURIComponent(baseText)}`;
+                  }
+                }
+              });
+            });
+          });
+
+          widget.onDialogOpen(function (dialog) {
+            const val = parseInt(photoCountSelect.value);
+            // Override settings gracefully at open time
+            dialog.settings.multipleMax = val;
+            dialog.settings.multipleMin = val;
+
+            dialog.fileColl.onRemove.add(function () {
+              if (dialog.fileColl.length() === 0) {
+                customImageB64 = null;
+                previewDiv.style.display = 'none';
+                previewDiv.innerHTML = '';
+              }
+            });
+          });
+        }
+      }
+
       // Add to cart
       document.getElementById('btn-add-to-cart').addEventListener('click', () => {
-        Cart.add(product.id, qty);
+        if (product.category === 'personalized' && !customImageB64) {
+          // Warning but allow
+          if (!confirm('You have not uploaded an image for your personalized product. Are you sure you want to proceed without an image?')) {
+            return;
+          }
+        }
+        Cart.add(product.id, qty, customImageB64);
       });
 
       // GSAP entrance
@@ -258,7 +386,7 @@
         relGrid.innerHTML = related.map(p => {
           const o = getDiscountPercent(p.originalPrice, p.price);
           return `
-            <div class="product-card" onclick="location.href='product.html?id=${p.id}'">
+                < div class="product-card" onclick = "location.href='product.html?id=${p.id}'" >
               <div class="product-img-wrap">
                 <img src="${p.image}" alt="${p.name}" class="product-img" loading="lazy"/>
                 <span class="product-badge badge-${p.badgeType}">${p.badge}</span>
@@ -283,7 +411,7 @@
                   <span class="price-off">${o}% off</span>
                 </div>
               </div>
-            </div>`;
+            </div >`;
         }).join('');
       }
     }
@@ -295,6 +423,24 @@
       if (window.gsap) gsap.from(img, { opacity: 0, scale: 0.95, duration: 0.4, ease: 'power2.out' });
       img.src = thumb.dataset.img;
     }
+
+    // Fix all WhatsApp links to avoid App download prompt on Desktop
+    document.querySelectorAll('a[href^="https://wa.me/"]').forEach(a => {
+      const isMob = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (!isMob) {
+        try {
+          const url = new URL(a.href);
+          const phone = url.pathname.replace('/', '');
+          const text = url.searchParams.get('text') || '';
+          let newHref = `https://web.whatsapp.com/send?phone=${phone}`;
+          if (text) newHref += `&text=${encodeURIComponent(text)}`;
+          // If it's the direct button, we already handled it
+          if (a.id !== 'btn-wa-direct') {
+            a.href = newHref;
+          }
+        } catch (e) { }
+      }
+    });
   </script>
 </body>
 

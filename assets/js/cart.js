@@ -16,14 +16,16 @@ const Cart = {
         this.updateUI();
     },
 
-    add(productId, qty = 1) {
+    add(productId, qty = 1, customImageB64 = null) {
         const product = getProductById(productId);
         if (!product) return;
-        const existing = this.items.find(i => i.id === product.id);
-        if (existing) {
+        const existing = this.items.find(i => i.id === product.id && i.customImageB64 === customImageB64);
+        if (existing && !customImageB64) {
+            existing.qty += qty;
+        } else if (existing && existing.customImageB64 === customImageB64) {
             existing.qty += qty;
         } else {
-            this.items.push({ id: product.id, name: product.name, price: product.price, image: product.image, qty });
+            this.items.push({ id: product.id, name: product.name, price: product.price, image: product.image, qty, customImageB64 });
         }
         this.save();
         this.showAddedFeedback(productId);

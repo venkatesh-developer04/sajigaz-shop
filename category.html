@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shop — Sajigaz Designs | Gift Hampers & Personalized Gifts</title>
+    <title>Shop — Sajigaz Designs | Photo Magnets</title>
     <meta name="description"
         content="Browse all gifts, hampers, personalized items and gift boxes from Sajigaz Designs." />
     <link rel="icon" type="image/png" href="assets/img/product_logo.png" />
@@ -38,10 +38,10 @@
             </div>
             <nav class="main-nav">
                 <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="category.html" class="active">Shop</a></li>
-                    <li><a href="category.html?cat=hampers">Hampers</a></li>
-                    <li><a href="category.html?cat=personalized">Personalized</a></li>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="category.html">Shop All</a></li>
+                    <li><a href="category.html?cat=personalized">Photo Magnet</a></li>
+                    <li><a href="bulk-order.html">Bulk Order</a></li>
                 </ul>
             </nav>
             <div class="header-actions">
@@ -61,7 +61,7 @@
             <a href="category.html?cat=gift-boxes"><span class="material-symbols-outlined ms-sm">inventory_2</span> Gift
                 Boxes</a>
             <a href="category.html?cat=personalized"><span class="material-symbols-outlined ms-sm">auto_awesome</span>
-                Personalized</a>
+                Photo Magnet</a>
             <a href="cart.html"><span class="material-symbols-outlined ms-sm">shopping_cart</span> My Cart</a>
         </nav>
     </header>
@@ -95,7 +95,7 @@
                         <span class="material-symbols-outlined ms-sm">inventory_2</span> Gift Boxes
                     </button>
                     <button class="filter-tab" data-cat="personalized">
-                        <span class="material-symbols-outlined ms-sm">auto_awesome</span> Personalized
+                        <span class="material-symbols-outlined ms-sm">auto_awesome</span> Photo Magnet
                     </button>
                 </div>
                 <select class="sort-select" id="sortSelect">
@@ -151,7 +151,7 @@
         });
 
         // Page hero labels
-        const catMap = { hampers: 'Gift Hampers', 'gift-boxes': 'Gift Boxes', personalized: 'Personalized Gifts', all: 'All Gifts' };
+        const catMap = { hampers: 'Gift Hampers', 'gift-boxes': 'Gift Boxes', personalized: 'Photo Magnet', all: 'All Gifts' };
         document.getElementById('pageHeroTitle').textContent = activeSearch ? `Search: "${activeSearch}"` : (catMap[activeCat] || 'All Gifts');
         document.getElementById('breadcrumbCurrent').textContent = catMap[activeCat] || 'Shop';
 

@@ -131,16 +131,29 @@
 <body>
 
     <div class="announcement-bar">
-        <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;">redeem</span>
+      <span class="material-symbols-outlined" style="font-size: 1rem; vertical-align: middle">redeem</span>
         &nbsp;Free Gift Wrapping on ₹999+&nbsp;|&nbsp;Orders confirmed via WhatsApp
-        <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;">check_circle</span>
+      <span class="material-symbols-outlined" style="font-size: 1rem; vertical-align: middle">check_circle</span>
     </div>
 
+    <!-- Header -->
     <header class="site-header">
         <div class="container header-inner">
+        <!-- Logo -->
             <div class="logo">
-                <a href="index.html"><img src="assets/img/product_logo.png" alt="Sajigaz Designs" /></a>
+          <a href="index.html">
+            <img src="assets/img/product_logo.png" alt="Sajigaz Designs" />
+          </a>
+        </div>
+
+        <!-- Search -->
+        <div class="search-wrap">
+          <i class="ri-search-line"></i>
+          <input type="text" class="search-input" placeholder="Search gifts, hampers, keychains…" autocomplete="off" />
+          <button class="search-btn" aria-label="Search"><i class="ri-arrow-right-line"></i></button>
             </div>
+
+        <!-- Desktop Nav -->
             <nav class="main-nav">
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
@@ -238,16 +251,22 @@
                             </small>
                         </div>
 
-                        <div class="form-group">
-                            <label for="address" style="display:flex;align-items:center;gap:5px;">
-                                <span class="material-symbols-outlined"
-                                    style="font-size:0.9rem;color:var(--purple);">location_on</span>
-                                Delivery Address *
-                            </label>
-                            <textarea id="address" class="form-control"
-                                placeholder="House / Flat No., Street, Area, City, Pincode" rows="3"
-                                required></textarea>
-                        </div>
+              <div class="form-group">
+                <label for="address" style="display: flex; align-items: center; gap: 5px">
+                  <span class="material-symbols-outlined" style="font-size: 0.9rem; color: var(--purple)">location_on</span>
+                  Delivery Address *
+                </label>
+                <textarea id="address" class="form-control" placeholder="House / Flat No., Street, Area, City" rows="3" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="pincode" style="display: flex; align-items: center; gap: 5px">
+                  <span class="material-symbols-outlined" style="font-size: 0.9rem; color: var(--purple)">pin_drop</span>
+                  Pincode *
+                </label>
+                <input type="tel" id="pincode" class="form-control" placeholder="e.g. 605001" maxlength="6" pattern="\d{6}" required />
+                <small id="deliveryEstimate" style="display: block; margin-top: 6px; font-size: 0.85rem; font-weight: 600; min-height: 20px"></small>
+              </div>
 
                         <div class="form-grid-2">
                             <div class="form-group">
@@ -415,17 +434,46 @@
                 return;
             }
 
-            // Render order summary
             const orderList = document.getElementById('orderItemsList');
-            orderList.innerHTML = items.map(item => `
-        <div class="order-item-row">
-          <img src="${item.image}" alt="${item.name}" class="order-item-img"/>
-          <div style="flex:1;min-width:0;">
-            <div class="order-item-name">${item.name}</div>
-            <div class="order-item-qty">Qty: ${item.qty}</div>
-          </div>
-          <div class="order-item-price">${formatPrice(item.price * item.qty)}</div>
-        </div>`).join('');
+            orderList.innerHTML = items.map(item => {
+                let imagesHtml = '';
+                if (item.customImageB64) {
+                    const cdnUrls = item.customImageB64.split(',');
+                    // Display the first uploaded custom image as the main icon, and fallback to product base image
+                    const mainImgSrc = cdnUrls[0] || item.image;
+
+                    // Show tiny thumbnails of all uploaded images
+                    const miniThumbs = cdnUrls.map(url => `<img src="${url}-/preview/40x40/" style="width:24px;height:24px;border-radius:4px;border:1px solid var(--purple-light);object-fit:cover;" />`).join('');
+
+                    imagesHtml = `
+                    <div style="flex:1;min-width:0;">
+                      <div class="order-item-name">${item.name}</div>
+                      <div class="order-item-qty">Qty: ${item.qty}</div>
+                      <div style="margin-top:6px;display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--purple);font-weight:600;flex-wrap:wrap;">
+                         <span class="material-symbols-outlined" style="font-size:0.9rem;">collections</span> 
+                         ${cdnUrls.length} Photo${cdnUrls.length > 1 ? 's' : ''} Attached:
+                         <div style="display:flex;gap:4px;flex-wrap:wrap;margin-left:4px;">${miniThumbs}</div>
+                      </div>
+                    </div>
+                    `;
+                    return `
+                    <div class="order-item-row">
+                      <img src="${mainImgSrc}-/preview/100x100/" alt="${item.name}" class="order-item-img" style="border-radius:6px;border:1px solid var(--purple)"/>
+                      ${imagesHtml}
+                      <div class="order-item-price">${formatPrice(item.price * item.qty)}</div>
+                    </div>`;
+                } else {
+                    return `
+                    <div class="order-item-row">
+                      <img src="${item.image}" alt="${item.name}" class="order-item-img"/>
+                      <div style="flex:1;min-width:0;">
+                        <div class="order-item-name">${item.name}</div>
+                        <div class="order-item-qty">Qty: ${item.qty}</div>
+                      </div>
+                      <div class="order-item-price">${formatPrice(item.price * item.qty)}</div>
+                    </div>`;
+                }
+            }).join('');
 
             const subtotal = Cart.getTotal();
             const delivery = subtotal >= 999 ? 0 : 80;
@@ -439,30 +487,94 @@
             today.setDate(today.getDate() + 1);
             document.getElementById('deliveryDate').min = today.toISOString().split('T')[0];
 
-            // GSAP entrance
-            if (window.gsap) {
-                gsap.from('.checkout-form-wrap', { opacity: 0, x: -50, duration: 0.8, ease: 'power3.out' });
-                gsap.from('.cart-summary', { opacity: 0, x: 50, duration: 0.8, ease: 'power3.out', delay: 0.15 });
-            }
+        // GSAP entrance
+        if (window.gsap) {
+          gsap.from('.checkout-form-wrap', { opacity: 0, x: -50, duration: 0.8, ease: 'power3.out' });
+          gsap.from('.cart-summary', { opacity: 0, x: 50, duration: 0.8, ease: 'power3.out', delay: 0.15 });
+        }
+
+        // Pincode delivery estimation
+        let pincodeTimeout;
+        const PONDY_COORDS = { lat: 11.9416, lon: 79.8083 }; // Pondicherry Origin
+
+        function deg2rad(deg) {
+          return deg * (Math.PI / 180);
+        }
+
+        function getDistInKm(lat1, lon1, lat2, lon2) {
+          const R = 6371; // Earth radius km
+          const dLat = deg2rad(lat2 - lat1);
+          const dLon = deg2rad(lon2 - lon1);
+          const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+          return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        document.getElementById('pincode').addEventListener('input', function () {
+          const pin = this.value.trim();
+          const msg = document.getElementById('deliveryEstimate');
+          clearTimeout(pincodeTimeout);
+
+          if (pin.length === 6 && /^\d+$/.test(pin)) {
+            msg.textContent = 'Calculating distance...';
+            msg.style.color = 'var(--text-muted)';
+
+            pincodeTimeout = setTimeout(async () => {
+              try {
+                const res = await fetch(`https://api.zippopotam.us/in/${pin}`);
+                if (!res.ok) throw new Error('Not found');
+                const data = await res.json();
+                if (data.places && data.places.length > 0) {
+                  const place = data.places[0];
+                  const dist = Math.round(getDistInKm(PONDY_COORDS.lat, PONDY_COORDS.lon, parseFloat(place.latitude), parseFloat(place.longitude)));
+                  let days = dist < 50 ? '1-2 days' : dist < 500 ? '2-3 days' : dist < 1200 ? '3-5 days' : '5-7 days';
+                  msg.textContent = `Distance: ${dist} km — Est. Delivery: ${days}`;
+                } else {
+                  throw new Error('Not found');
+                }
+              } catch (e) {
+                let days = pin.startsWith('605') ? '1-2 days (Local)' : pin.startsWith('6') || pin.startsWith('5') ? '3-4 days (South India)' : '5-7 days (Rest of India)';
+                msg.textContent = `Est. Delivery: ${days}`;
+              }
+              msg.style.color = 'var(--purple)';
+              if (window.gsap) gsap.from(msg, { opacity: 0, y: -5, duration: 0.3 });
+            }, 600);
+          } else {
+            msg.textContent = '';
+          }
         });
+      });
 
         // Form submission
         document.getElementById('checkoutForm').addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const address = document.getElementById('address').value.trim();
-            const occasion = document.getElementById('occasion').value;
-            const deliveryDate = document.getElementById('deliveryDate').value;
-            const giftMsg = document.getElementById('giftMsg').value.trim();
-            const specialReq = document.getElementById('specialReq').value.trim();
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const address = document.getElementById('address').value.trim();
+        const pincode = document.getElementById('pincode').value.trim();
+        const occasion = document.getElementById('occasion').value;
+        const deliveryDate = document.getElementById('deliveryDate').value;
+        const giftMsg = document.getElementById('giftMsg').value.trim();
+        const specialReq = document.getElementById('specialReq').value.trim();
 
-            // Basic validation
-            if (!firstName) { showFieldError('firstName', 'Please enter your first name'); return; }
-            if (!phone || phone.replace(/\D/g, '').length < 10) { showFieldError('phone', 'Please enter a valid phone number'); return; }
-            if (!address) { showFieldError('address', 'Please enter your delivery address'); return; }
+        // Basic validation
+        if (!firstName) {
+          showFieldError('firstName', 'Please enter your first name');
+          return;
+        }
+        if (!phone || phone.replace(/\D/g, '').length < 10) {
+          showFieldError('phone', 'Please enter a valid phone number');
+          return;
+        }
+        if (!address) {
+          showFieldError('address', 'Please enter your delivery address');
+          return;
+        }
+        if (!pincode || !/^\d{6}$/.test(pincode)) {
+          showFieldError('pincode', 'Please enter a valid 6-digit pincode');
+          return;
+        }
 
             const items = Cart.items;
             const subtotal = Cart.getTotal();
@@ -476,12 +588,19 @@
             msg += `Name: ${firstName} ${lastName}\n`;
             msg += `Phone: ${phone}\n`;
             msg += `Address: ${address}\n`;
+            msg += `Pincode: ${pincode}\n`;
             if (occasion) msg += `Occasion: ${occasion}\n`;
             if (deliveryDate) msg += `Delivery Date: ${deliveryDate}\n`;
             msg += `\n*Order Items*\n`;
             msg += `━━━━━━━━━━━━━━━━━━\n`;
+            let hasCustomImage = false;
+            let customImageLinks = [];
             items.forEach(item => {
                 msg += `• ${item.name} x${item.qty} = ${formatPrice(item.price * item.qty)}\n`;
+                if (item.customImageB64) {
+                    hasCustomImage = true;
+                    customImageLinks.push(item.customImageB64);
+                }
             });
             msg += `━━━━━━━━━━━━━━━━━━\n`;
             msg += `Subtotal: ${formatPrice(subtotal)}\n`;
@@ -489,9 +608,16 @@
             msg += `*Total: ${formatPrice(total)}*\n`;
             if (giftMsg) msg += `\nGift Message: "${giftMsg}"\n`;
             if (specialReq) msg += `Special Request: ${specialReq}\n`;
+            if (hasCustomImage) {
+                msg += `\n*My Custom Images:*\n${customImageLinks.join('\\n')}\n`;
+            }
             msg += `\nPlease confirm my order. Thank you!`;
 
-            const waUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+            // Smart Laptop / Desktop Handling
+            const isMob = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const waUrl = isMob
+                ? `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(msg)}`
+                : `https://web.whatsapp.com/send?phone=${OWNER_WHATSAPP}&text=${encodeURIComponent(msg)}`;
 
             // Confetti burst — CSS geometric shapes
             launchConfetti();
@@ -547,6 +673,23 @@
             document.getElementById('successOverlay').classList.remove('show');
             window.location.href = 'index.html';
         }
+
+        // Fix all WhatsApp links to avoid App download prompt on Desktop
+        document.querySelectorAll('a[href^="https://wa.me/"]').forEach(a => {
+            const isMob = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (!isMob) {
+                try {
+                    const url = new URL(a.href);
+                    const phone = url.pathname.replace('/', '');
+                    const text = url.searchParams.get('text') || '';
+                    let newHref = `https://web.whatsapp.com/send?phone=${phone}`;
+                    if (text) newHref += `&text=${encodeURIComponent(text)}`;
+                    if (a.id !== 'successWaLink') {
+                        a.href = newHref;
+                    }
+                } catch (e) { }
+            }
+        });
     </script>
 </body>
 
