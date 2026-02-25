@@ -44,10 +44,10 @@ function initScrollReveal() {
 
 // ── GSAP animations ──
 function initGSAP() {
-  if (!window.gsap) return;
-  if (typeof ScrollTrigger !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-  }
+    if (!window.gsap) return;
+    if (typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+    }
 
     // Hero text entrance
     const heroTitle = document.querySelector('.hero-title');
@@ -181,22 +181,87 @@ function initParticles() {
 
 // ── Search functionality ──
 function initSearch() {
-    const inputs = document.querySelectorAll('.search-input');
-    inputs.forEach(input => {
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                const q = input.value.trim();
-                if (q) {
-                    window.location.href = `category.html?search=${encodeURIComponent(q)}`;
-                }
+    const searchWraps = document.querySelectorAll('.search-wrap');
+
+    // Add global click listener to close suggestions
+    document.addEventListener('click', (e) => {
+        searchWraps.forEach(wrap => {
+            if (!wrap.contains(e.target)) {
+                const sugg = wrap.querySelector('.search-suggestions');
+                if (sugg) sugg.style.display = 'none';
             }
         });
     });
-    const btns = document.querySelectorAll('.search-btn');
-    btns.forEach((btn, i) => {
-        btn.addEventListener('click', () => {
-            const q = inputs[i]?.value.trim();
-            if (q) window.location.href = `category.html?search=${encodeURIComponent(q)}`;
+
+    searchWraps.forEach(wrap => {
+        const input = wrap.querySelector('.search-input');
+        const btn = wrap.querySelector('.search-btn');
+        if (!input) return;
+
+        wrap.style.position = 'relative';
+
+        // Create suggestion container
+        const suggList = document.createElement('div');
+        suggList.className = 'search-suggestions';
+        suggList.style.cssText = 'position:absolute;top:100%;left:0;right:0;background:white;box-shadow:0 4px 15px rgba(0,0,0,0.1);border-radius:8px;margin-top:8px;z-index:1000;max-height:300px;overflow-y:auto;display:none;';
+        wrap.appendChild(suggList);
+
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const q = input.value.trim();
+                if (q) window.location.href = `category.html?search=${encodeURIComponent(q)}`;
+            });
+        }
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const q = input.value.trim();
+                if (q) window.location.href = `category.html?search=${encodeURIComponent(q)}`;
+            }
+        });
+
+        // Autocomplete on typing
+        input.addEventListener('input', () => {
+            const q = input.value.trim().toLowerCase();
+            if (!q) {
+                suggList.style.display = 'none';
+                return;
+            }
+
+            // Search in PRODUCTS
+            let results = [];
+            if (typeof PRODUCTS !== 'undefined') {
+                results = PRODUCTS.filter(p =>
+                    p.name.toLowerCase().includes(q) ||
+                    (p.categoryName && p.categoryName.toLowerCase().includes(q)) ||
+                    (p.tags && p.tags.join(' ').toLowerCase().includes(q))
+                ).slice(0, 5);
+            }
+
+            suggList.innerHTML = '';
+            if (results.length > 0) {
+                results.forEach(p => {
+                    const item = document.createElement('div');
+                    item.style.cssText = 'display:flex;align-items:center;gap:12px;padding:10px 16px;cursor:pointer;border-bottom:1px solid #f0f0f0;transition:background 0.2s;';
+                    item.onmouseover = () => item.style.background = '#f9f9f9';
+                    item.onmouseout = () => item.style.background = 'transparent';
+                    item.onclick = (e) => {
+                        e.stopPropagation();
+                        window.location.href = `product.html?id=${p.id}`;
+                    };
+                    item.innerHTML = `
+                        <img src="${p.image}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;">
+                        <div style="flex:1;">
+                            <div style="font-size:0.9rem;font-weight:600;color:#333;">${p.name}</div>
+                            <div style="font-size:0.8rem;color:var(--text-muted);">${p.categoryName}</div>
+                        </div>
+                    `;
+                    suggList.appendChild(item);
+                });
+            } else {
+                suggList.innerHTML = `<div style="padding:10px 16px;font-size:0.9rem;color:var(--text-muted);text-align:center;">No gifts found matching "${q}"</div>`;
+            }
+            suggList.style.display = 'block';
         });
     });
 }
@@ -228,4 +293,23 @@ document.addEventListener('DOMContentLoaded', () => {
     initGSAP();
     initParticles();
     initSearch();
+    checkAppVersion();
 });
+
+// ── App Upgrade Flow ──
+function checkAppVersion() {
+    const CURRENT_VERSION = '2.0';
+    const savedVer = localStorage.getItem('sajigaz_app_version');
+
+    if (savedVer && savedVer !== CURRENT_VERSION) {
+        setTimeout(() => {
+            const shouldUpgrade = confirm("A new version of Sajigaz Designs is available! Upgrade now to get the latest features and designs.");
+            if (shouldUpgrade) {
+                localStorage.setItem('sajigaz_app_version', CURRENT_VERSION);
+                location.reload(true);
+            }
+        }, 500);
+    } else if (!savedVer) {
+        localStorage.setItem('sajigaz_app_version', CURRENT_VERSION);
+    }
+}

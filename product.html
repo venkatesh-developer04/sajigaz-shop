@@ -305,11 +305,21 @@
 
             // Personalization image logic
             let customImageB64 = null;
-            if (product.category === 'personalized') {
+            if (product.category === 'personalized' || product.category === 'Photomagnet') {
                 const previewDiv = document.getElementById('customImagePreview');
                 const waBtn = document.getElementById('btn-wa-direct');
                 const photoCountSelect = document.getElementById('photoCountSelect');
                 const input = document.getElementById('customImageUcare');
+
+                // Read crop ratio from product data (defined in products.js)
+                const cropRatio = product.cropRatio || null;
+
+                if (cropRatio) {
+                    // Setting data-crop causes Uploadcare to auto-open the Crop tab
+                    // immediately after upload, enforcing the correct aspect ratio.
+                    // All other editing tabs (Rotate, Enhance, etc.) remain accessible after.
+                    input.setAttribute('data-crop', cropRatio);
+                }
 
                 let widgetInstance = uploadcare.Widget(input);
 
@@ -325,13 +335,16 @@
                     input.setAttribute('data-multiple', 'true');
                     input.setAttribute('data-multiple-max', val);
                     input.setAttribute('data-multiple-min', val);
+                    if (cropRatio) input.setAttribute('data-crop', cropRatio);
 
                     // Recreate widget
                     widgetInstance = uploadcare.Widget(input);
                 });
 
                 if (window.uploadcare) {
-                    // Enable photo editing effects: crop, rotate, color adjustments
+                    // ALL editing features are enabled. Crop is listed first so the widget
+                    // auto-opens on the Crop tab after upload. User can then freely use
+                    // Rotate, Enhance, Sharpen, and Grayscale tabs as well.
                     uploadcare.plugin(function (core) {
                         core.settings.effects = 'crop,rotate,enhance,sharp,grayscale';
                     });
@@ -340,6 +353,14 @@
                     window.widgetInstance = widget;
 
                     widget.onUploadComplete(function (info) {
+                        // Restrict uploads validation
+                        const expectedCount = parseInt(photoCountSelect.value);
+                        if (info.count !== expectedCount) {
+                            alert(`Please upload exactly ${expectedCount} photos based on your selection. You uploaded ${info.count}.`);
+                            widget.value(null);
+                            return;
+                        }
+
                         const cdnUrls = [];
                         previewDiv.innerHTML = '';
 
@@ -383,6 +404,7 @@
                         // Override settings gracefully at open time
                         dialog.settings.multipleMax = val;
                         dialog.settings.multipleMin = val;
+                        if (cropRatio) dialog.settings.crop = cropRatio;
 
                         dialog.fileColl.onRemove.add(function () {
                             if (dialog.fileColl.length() === 0) {
@@ -397,9 +419,9 @@
 
             // Add to cart
             document.getElementById('btn-add-to-cart').addEventListener('click', () => {
-                if (product.category === 'personalized' && !customImageB64) {
+                if ((product.category === 'personalized' || product.category === 'Photomagnet') && !customImageB64) {
                     // Warning but allow
-                    if (!confirm('You have not uploaded an image for your personalized product. Are you sure you want to proceed without an image?')) {
+                    if (!confirm('You have not uploaded an image for your custom product. Are you sure you want to proceed without an image?')) {
                         return;
                     }
                 }
