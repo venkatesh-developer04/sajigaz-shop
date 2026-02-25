@@ -181,7 +181,7 @@ function initParticles() {
 
 // ── Search functionality ──
 function initSearch() {
-    const searchWraps = document.querySelectorAll('.search-wrap');
+    const searchWraps = document.querySelectorAll('.search-wrap-suggest');
 
     // Add global click listener to close suggestions
     document.addEventListener('click', (e) => {
@@ -198,7 +198,8 @@ function initSearch() {
         const btn = wrap.querySelector('.search-btn');
         if (!input) return;
 
-        wrap.style.position = 'relative';
+        // wrap.style.position = 'relative';
+        wrap.classList.contains('search-wrap') ? wrap.style.position = 'relative' : null;
 
         // Create suggestion container
         const suggList = document.createElement('div');

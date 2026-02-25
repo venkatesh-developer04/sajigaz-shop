@@ -416,8 +416,8 @@ ol {
     display: flex;
     align-items: center;
     gap: 20px;
-    padding: 14px 0;
-    justify-content: space-evenly;
+    padding: 14px 10px;
+    justify-content: space-between;
 }
 
 .logo a {
@@ -495,6 +495,9 @@ ol {
     flex: 1;
     max-width: 380px;
     transition: var(--transition);
+}
+.search-mobile {
+    display: none;
 }
 
 .search-wrap:focus-within {
@@ -1678,25 +1681,26 @@ ol {
 }
 
 .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
-    gap: 40px;
+    display: flex;
+    justify-content: center;
 }
 
 .footer-brand img {
-    height: 56px;
-    margin-bottom: 16px;
+    height: 72px;
+    margin: 16px auto;
 }
 
 .footer-brand p {
-    font-size: 0.875rem;
+        font-size: 21px;
     line-height: 1.7;
     margin-bottom: 24px;
+    text-align: center;
 }
 
 .footer-socials {
     display: flex;
     gap: 12px;
+    justify-content: center;
 }
 
 .social-btn {
@@ -2640,13 +2644,12 @@ textarea.form-control {
     .hamburger {
         display: flex;
     }
-
-    .search-wrap {
-        overflow: hidden;
-        max-width: 45px;
-        padding: 4px 12px;
-        font-size: 1.3rem;
-    }
+     /* .search-wrap {
+    overflow: hidden;
+    max-width: 45px;
+    padding: 4px 12px;
+    font-size: 1.3rem;
+  } */
 
     .custom-gift-wrap {
         flex-direction: column;
@@ -2694,7 +2697,53 @@ textarea.form-control {
     .section {
         padding: 56px 0;
     }
+    /* search */
+.search-wrap{
+    display:none;
 }
+
+.search-mobile{
+    display: flex;
+    align-items: center;
+    background: var(--gray-50);
+    border: 1.5px solid var(--border);
+    border-radius: 99px;
+    padding: 8px 16px;
+    gap: 8px;
+    flex: 1;
+    max-width: 380px;
+    transition: var(--transition);
+}
+.search-mobile:focus-within {
+    border-color: var(--purple-light);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(92, 45, 145, 0.1);
+}
+
+.search-mobile input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 0.9rem;
+    color: var(--text);
+    font-family: inherit;
+    outline: none;
+}
+
+.search-mobile input::placeholder {
+    color: var(--gray-400);
+}
+
+.search-mobile button {
+    background: none;
+    color: var(--purple);
+    font-size: 1rem;
+    padding: 0;
+    display: flex;
+}
+
+}
+
 
 /* ── WhatsApp FAB ── */
 .chat-fab {
@@ -2765,4 +2814,33 @@ textarea.form-control {
     font-size: 1.4rem;
     color: var(--purple-dark);
     margin-bottom: 8px;
+}
+/* contact form */
+.contact-section {
+  padding: 40px 0;
+}
+.contact-form {
+  max-width: 600px;
+  margin: 30px auto;
+}
+.contact-form .form-group {
+  margin-bottom: 24px;
+}
+.contact-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: var(--fw-medium);
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  border-radius: 25px;
+  padding: 12px;
+  border-color: var(--purple-light);
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(92, 45, 145, 0.1);
 }
