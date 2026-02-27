@@ -241,11 +241,11 @@
             <button class="wishlist-btn" onclick="event.stopPropagation()" aria-label="Wishlist">
               <span class="material-symbols-outlined">favorite_border</span>
             </button>
-            ${p.categoryName == 'Photomagnet' ? `<a href="product.html?id=${p.id}" class="product-link">View Details</a>` : `<div class="product-actions">
+            ${p.category != 'Photomagnet' ?  `<div class="product-actions">
               <button class="btn-add-cart" onclick="event.stopPropagation(); Cart.add(${p.id})">
                 <i class="ri-shopping-bag-line"></i> Add to Cart
               </button>
-            </div>`}
+            </div> ` : ''}
           </div>
           <div class="product-info">
             <div class="product-cat">${p.categoryName}</div>
