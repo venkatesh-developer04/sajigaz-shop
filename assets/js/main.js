@@ -314,3 +314,24 @@ function checkAppVersion() {
         localStorage.setItem('sajigaz_app_version', CURRENT_VERSION);
     }
 }
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".footer-brand img").forEach(img => {
+        const wrapper = document.createElement("div");
+
+        wrapper.style.width = "92px";
+        wrapper.style.height = "92px";
+        wrapper.style.background = "#fff";
+        wrapper.style.borderRadius = "50%";
+        wrapper.style.display = "flex";
+        wrapper.style.alignItems = "center";
+        wrapper.style.justifyContent = "center";
+        wrapper.style.margin = "16px auto";
+        wrapper.style.padding = "0px 6px 5px 12px";
+
+        img.parentNode.insertBefore(wrapper, img);
+        wrapper.appendChild(img);
+
+        img.style.height = "72px";
+        img.style.margin = "0";
+    });
+});
