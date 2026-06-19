@@ -271,15 +271,24 @@ function initSearch() {
 document.addEventListener('click', (e) => {
     const btn = e.target.closest('.wishlist-btn');
     if (btn) {
-        btn.classList.toggle('active');
-        const icon = btn.querySelector('.material-symbols-outlined');
-        if (icon) {
-            if (btn.classList.contains('active')) {
-                icon.textContent = 'favorite';
-                icon.classList.add('ms-fill');
-            } else {
-                icon.textContent = 'favorite_border';
-                icon.classList.remove('ms-fill');
+        const card = btn.closest('.product-card');
+        if (card) {
+            const productId = parseInt(card.dataset.productId);
+            if (productId && typeof Wishlist !== 'undefined') {
+                Wishlist.toggle(productId);
+            }
+        } else {
+            // Fallback manual toggle if it's not inside a product-card
+            btn.classList.toggle('active');
+            const icon = btn.querySelector('.material-symbols-outlined');
+            if (icon) {
+                if (btn.classList.contains('active')) {
+                    icon.textContent = 'favorite';
+                    icon.classList.add('ms-fill');
+                } else {
+                    icon.textContent = 'favorite_border';
+                    icon.classList.remove('ms-fill');
+                }
             }
         }
         if (window.gsap) {
@@ -304,10 +313,28 @@ function checkAppVersion() {
 
     if (savedVer && savedVer !== CURRENT_VERSION) {
         setTimeout(() => {
-            const shouldUpgrade = confirm("A new version of Sajigaz Designs is available! Upgrade now to get the latest features and designs.");
-            if (shouldUpgrade) {
-                localStorage.setItem('sajigaz_app_version', CURRENT_VERSION);
-                location.reload(true);
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'New Version Available!',
+                    text: 'A new version of Sajigaz Designs is available! Upgrade now to get the latest features and designs.',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e0a96d',
+                    cancelButtonColor: '#7a7a7a',
+                    confirmButtonText: 'Upgrade Now',
+                    cancelButtonText: 'Later'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        localStorage.setItem('sajigaz_app_version', CURRENT_VERSION);
+                        location.reload(true);
+                    }
+                });
+            } else {
+                const shouldUpgrade = confirm("A new version of Sajigaz Designs is available! Upgrade now to get the latest features and designs.");
+                if (shouldUpgrade) {
+                    localStorage.setItem('sajigaz_app_version', CURRENT_VERSION);
+                    location.reload(true);
+                }
             }
         }, 500);
     } else if (!savedVer) {

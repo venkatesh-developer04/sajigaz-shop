@@ -54,6 +54,10 @@
 
       <!-- Cart + Hamburger -->
       <div class="header-actions">
+        <a href="favorites.html" class="cart-btn" id="headerFavoritesBtn" style="background:transparent; color:var(--purple); border:1.5px solid var(--purple); box-shadow:none; padding:10px 12px; margin-right:4px;" title="Favorites">
+            <i class="ri-heart-line" style="font-size:1.15rem; vertical-align:middle;"></i>
+            <span class="cart-count wishlist-count" id="wishlistCountBadge" style="background:var(--magenta); top:-6px; right:-6px;">0</span>
+        </a>
         <a href="cart.html" class="cart-btn" id="headerCartBtn">
           <i class="ri-shopping-bag-line"></i>
           <span>Cart</span>
@@ -88,6 +92,10 @@
       <a href="contact.html">
         <span class="material-symbols-outlined ms-sm">auto_awesome</span>
         Contact Us
+      </a>
+      <a href="favorites.html">
+        <span class="material-symbols-outlined ms-sm">favorite</span>
+        Favorites
       </a>
       <a href="cart.html">
         <span class="material-symbols-outlined ms-sm">shopping_cart</span>
@@ -203,6 +211,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="assets/js/products.js"></script>
+  <script src="assets/js/wishlist.js"></script>
   <script src="assets/js/cart.js"></script>
   <script src="assets/js/main.js"></script>
   <script>
@@ -222,7 +231,8 @@
     document.getElementById('breadcrumbCurrent').textContent = catMap[activeCat] || 'Shop';
 
     // Pre-fill search
-    if (activeSearch) document.getElementById('searchInput').value = activeSearch;
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput && activeSearch) searchInput.value = activeSearch;
 
     function renderStars(rating) {
       const full = Math.round(rating);
@@ -238,7 +248,7 @@
           <div class="product-img-wrap">
             <img src="${p.image}" alt="${p.name}" class="product-img" loading="lazy"/>
             <span class="product-badge badge-${p.badgeType}">${p.badge}</span>
-            <button class="wishlist-btn" onclick="event.stopPropagation()" aria-label="Wishlist">
+            <button class="wishlist-btn" onclick="event.stopPropagation(); Wishlist.toggle(${p.id})" aria-label="Wishlist">
               <span class="material-symbols-outlined">favorite_border</span>
             </button>
             ${p.category != 'Photomagnet' ? `<div class="product-actions">
@@ -311,12 +321,14 @@
     });
 
     // Real-time search
-    document.getElementById('searchInput').addEventListener('input', function () {
-      const q = this.value.trim().toLowerCase();
-      let prods = getProductsByCategory(activeCat === 'all' ? null : activeCat);
-      if (q) prods = prods.filter(p => p.name.toLowerCase().includes(q) || p.tags.join(' ').includes(q));
-      renderProducts(prods);
-    });
+    if (searchInput) {
+      searchInput.addEventListener('input', function () {
+        const q = this.value.trim().toLowerCase();
+        let prods = getProductsByCategory(activeCat === 'all' ? null : activeCat);
+        if (q) prods = prods.filter(p => p.name.toLowerCase().includes(q) || p.tags.join(' ').includes(q));
+        renderProducts(prods);
+      });
+    }
 
     document.getElementById('sortSelect').addEventListener('change', () => renderProducts(getFiltered()));
   </script>
