@@ -1,0 +1,163 @@
+/* Admin panel styles. Reuses the global brand CSS variables from style.css. */
+.admin-wrap {
+    min-height: 100vh;
+    background: var(--gray-50, #f7f7fb);
+    padding: 24px;
+    font-family: var(--ff-body, system-ui, sans-serif);
+    color: #222;
+}
+
+.admin-login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--purple-dark, #3d1d63);
+    padding: 24px;
+}
+
+.admin-login-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 36px 32px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.admin-login-card h1 {
+    font-family: var(--ff-display, inherit);
+    color: var(--purple-dark, #3d1d63);
+    font-size: 1.5rem;
+    margin: 12px 0 4px;
+}
+
+.admin-login-card p {
+    color: var(--text-muted, #777);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+}
+
+.admin-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border, #e3e3e8);
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 14px;
+    outline: none;
+}
+.admin-input:focus { border-color: var(--purple, #5C2D91); }
+
+.admin-btn {
+    background: var(--purple, #5C2D91);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.2s;
+}
+.admin-btn:hover { opacity: 0.9; }
+.admin-btn.ghost { background: transparent; color: var(--purple, #5C2D91); border: 1.5px solid var(--purple, #5C2D91); }
+.admin-btn.sm { padding: 6px 12px; font-size: 0.8rem; border-radius: 8px; }
+.admin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.admin-error { color: var(--magenta, #E1173F); font-size: 0.85rem; margin-bottom: 12px; }
+
+.admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto 20px;
+}
+.admin-header h1 {
+    font-family: var(--ff-display, inherit);
+    color: var(--purple-dark, #3d1d63);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.admin-toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.admin-toolbar select {
+    padding: 8px 12px;
+    border: 1.5px solid var(--border, #e3e3e8);
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.admin-table-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+    overflow: auto;
+}
+table.admin-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.admin-table th, .admin-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--gray-100, #f0f0f4); white-space: nowrap; }
+.admin-table th { background: var(--gray-50, #f7f7fb); color: var(--gray-600, #555); font-weight: 700; position: sticky; top: 0; }
+.admin-table tr:hover td { background: #faf8ff; }
+.admin-table .muted { color: var(--text-muted, #888); font-size: 0.8rem; }
+
+.status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.status-created { background: #fff4d6; color: #8a6d00; }
+.status-paid { background: #d8f5e3; color: #11713c; }
+.status-failed { background: #ffe0e6; color: #b3082e; }
+.status-fulfilled { background: #e2dbff; color: #4a2a8f; }
+
+.admin-empty, .admin-loading { text-align: center; padding: 60px 20px; color: var(--text-muted, #888); }
+
+/* Detail modal */
+.admin-modal-overlay {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45);
+    display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
+}
+.admin-modal {
+    background: #fff; border-radius: 16px; width: 100%; max-width: 560px;
+    max-height: 88vh; overflow: auto; padding: 24px;
+}
+.admin-modal h2 { font-family: var(--ff-display, inherit); color: var(--purple-dark, #3d1d63); font-size: 1.2rem; margin-bottom: 4px; }
+.admin-modal .row { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--gray-100, #f0f0f4); font-size: 0.88rem; }
+.admin-modal .row .k { color: var(--text-muted, #888); }
+.admin-modal .row .v { font-weight: 600; text-align: right; word-break: break-word; }
+.admin-modal .items { margin: 14px 0; }
+.admin-modal .item { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; font-size: 0.85rem; }
+.admin-modal .item a { color: var(--purple, #5C2D91); word-break: break-all; }
+.admin-modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; }
+
+/* Product form */
+.admin-form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; margin-top: 8px; }
+.admin-form .field { display: flex; flex-direction: column; gap: 4px; }
+.admin-form .field.full { grid-column: 1 / -1; }
+.admin-form label { font-size: 0.78rem; font-weight: 700; color: var(--gray-600, #555); }
+.admin-form input, .admin-form textarea, .admin-form select {
+    padding: 9px 11px; border: 1.5px solid var(--border, #e3e3e8); border-radius: 8px; font-size: 0.9rem; font-family: inherit; outline: none; width: 100%;
+}
+.admin-form input:focus, .admin-form textarea:focus, .admin-form select:focus { border-color: var(--purple, #5C2D91); }
+.admin-form .check { flex-direction: row; align-items: center; gap: 8px; }
+.admin-form .check input { width: auto; }
+.admin-table .thumb-cell img { width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--gray-100, #eee); }
+.admin-nav { display: flex; gap: 8px; }
+.admin-nav a { padding: 6px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; color: var(--purple, #5C2D91); border: 1.5px solid transparent; text-decoration: none; }
+.admin-nav a.active { background: var(--purple, #5C2D91); color: #fff; }
+.admin-nav a:not(.active):hover { border-color: var(--purple, #5C2D91); }
