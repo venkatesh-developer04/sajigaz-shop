@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { getProducts, adminCreateProduct, adminUpdateProduct, adminDeleteProduct } from '../../lib/api'
 import { formatPrice } from '../../lib/format'
 import { CATEGORY_OPTIONS } from '../../data/categories'
 import { ADMIN_TOKEN_KEY } from './AdminLogin'
+import Pagination from './Pagination'
 import './admin.css'
 
 const BADGE_TYPES = ['bestseller', 'new', 'toppick', 'sale', 'special', 'festival']
@@ -53,9 +54,18 @@ export default function AdminProducts() {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
-    const [editing, setEditing] = useState(null) // null = closed; {} or product = open
+    const [editing, setEditing] = useState(null)
     const [form, setForm] = useState(EMPTY)
     const [saving, setSaving] = useState(false)
+
+    // View controls
+    const [search, setSearch] = useState('')
+    const [categoryFilter, setCategoryFilter] = useState('')
+    const [featuredFilter, setFeaturedFilter] = useState('all')
+    const [sort, setSort] = useState('newest')
+    const [view, setView] = useState('table')
+    const [page, setPage] = useState(1)
+    const [pageSize, setPageSize] = useState(12)
 
     const token = typeof localStorage !== 'undefined' ? localStorage.getItem(ADMIN_TOKEN_KEY) : null
 
@@ -78,6 +88,35 @@ export default function AdminProducts() {
 
     useEffect(() => { document.title = 'Products — Admin — Sajigaz Designs' }, [])
     useEffect(() => { load() }, [load])
+    useEffect(() => { setPage(1) }, [search, categoryFilter, featuredFilter, sort, pageSize])
+
+    // Distinct categories present in the catalog (for the filter dropdown).
+    const categories = useMemo(() => {
+        const map = new Map()
+        products.forEach((p) => { if (!map.has(p.category)) map.set(p.category, p.categoryName || p.category) })
+        return [...map.entries()].map(([id, name]) => ({ id, name }))
+    }, [products])
+
+    const filtered = useMemo(() => {
+        const q = search.trim().toLowerCase()
+        let list = products.filter((p) => {
+            if (categoryFilter && p.category !== categoryFilter) return false
+            if (featuredFilter === 'yes' && !p.featured) return false
+            if (featuredFilter === 'no' && p.featured) return false
+            if (q && !(`${p.name} ${p.category} ${p.categoryName} ${(p.tags || []).join(' ')}`.toLowerCase().includes(q))) return false
+            return true
+        })
+        list = [...list]
+        if (sort === 'newest') list.sort((a, b) => b.id - a.id)
+        if (sort === 'oldest') list.sort((a, b) => a.id - b.id)
+        if (sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name))
+        if (sort === 'price-asc') list.sort((a, b) => a.price - b.price)
+        if (sort === 'price-desc') list.sort((a, b) => b.price - a.price)
+        return list
+    }, [products, search, categoryFilter, featuredFilter, sort])
+
+    const total = filtered.length
+    const paged = useMemo(() => filtered.slice((page - 1) * pageSize, page * pageSize), [filtered, page, pageSize])
 
     const openCreate = () => { setForm(EMPTY); setEditing({}) }
     const openEdit = (p) => { setForm(toForm(p)); setEditing(p) }
@@ -145,22 +184,54 @@ export default function AdminProducts() {
                 </div>
             </div>
 
+            {/* Controls */}
+            <div className="admin-controls">
+                <div className="admin-search">
+                    <span className="material-symbols-outlined">search</span>
+                    <input type="text" placeholder="Search name, category, tag…" value={search} onChange={(e) => setSearch(e.target.value)} />
+                </div>
+                <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
+                    <option value="">All categories</option>
+                    {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                </select>
+                <select value={featuredFilter} onChange={(e) => setFeaturedFilter(e.target.value)}>
+                    <option value="all">All</option>
+                    <option value="yes">Featured only</option>
+                    <option value="no">Not featured</option>
+                </select>
+                <select value={sort} onChange={(e) => setSort(e.target.value)}>
+                    <option value="newest">Newest first</option>
+                    <option value="oldest">Oldest first</option>
+                    <option value="name">Name A–Z</option>
+                    <option value="price-asc">Price: low → high</option>
+                    <option value="price-desc">Price: high → low</option>
+                </select>
+                <span className="admin-spacer" />
+                <span className="admin-count">{total} product{total !== 1 ? 's' : ''}</span>
+                <div className="view-toggle">
+                    <button className={view === 'table' ? 'active' : ''} title="Table view" onClick={() => setView('table')}>
+                        <span className="material-symbols-outlined" style={{ fontSize: '1.1rem' }}>table_rows</span>
+                    </button>
+                    <button className={view === 'grid' ? 'active' : ''} title="Grid view" onClick={() => setView('grid')}>
+                        <span className="material-symbols-outlined" style={{ fontSize: '1.1rem' }}>grid_view</span>
+                    </button>
+                </div>
+            </div>
+
             {error && <div className="admin-error" style={{ maxWidth: '1200px', margin: '0 auto 12px' }}>{error}</div>}
 
-            <div className="admin-table-wrap">
-                {loading ? (
-                    <div className="admin-loading">Loading products…</div>
-                ) : products.length === 0 ? (
-                    <div className="admin-empty">No products. Click “Add Product”.</div>
-                ) : (
+            {loading ? (
+                <div className="admin-table-wrap"><div className="admin-loading">Loading products…</div></div>
+            ) : total === 0 ? (
+                <div className="admin-table-wrap"><div className="admin-empty">No products match. Click “Add Product”.</div></div>
+            ) : view === 'table' ? (
+                <div className="admin-table-wrap">
                     <table className="admin-table">
                         <thead>
-                            <tr>
-                                <th>#</th><th></th><th>Name</th><th>Category</th><th>Price</th><th>Featured</th><th></th>
-                            </tr>
+                            <tr><th>#</th><th></th><th>Name</th><th>Category</th><th>Price</th><th>Featured</th><th></th></tr>
                         </thead>
                         <tbody>
-                            {products.map((p) => (
+                            {paged.map((p) => (
                                 <tr key={p.id}>
                                     <td>{p.id}</td>
                                     <td className="thumb-cell"><img src={p.image} alt="" /></td>
@@ -176,8 +247,30 @@ export default function AdminProducts() {
                             ))}
                         </tbody>
                     </table>
-                )}
-            </div>
+                </div>
+            ) : (
+                <div className="admin-grid">
+                    {paged.map((p) => (
+                        <div className="prod-card" key={p.id}>
+                            <img className="pc-img" src={p.image} alt={p.name} />
+                            <div className="pc-body">
+                                {p.featured && <span className="pc-feat">Featured</span>}
+                                <div className="pc-name">{p.name}</div>
+                                <div className="pc-cat">{p.categoryName}</div>
+                                <div className="pc-price">{formatPrice(p.price)}</div>
+                            </div>
+                            <div className="pc-actions">
+                                <button className="admin-btn ghost sm" onClick={() => openEdit(p)}>Edit</button>
+                                <button className="admin-btn ghost sm" style={{ color: 'var(--magenta)', borderColor: 'var(--magenta)' }} onClick={() => remove(p)}>Delete</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {!loading && total > 0 && (
+                <Pagination total={total} page={page} pageSize={pageSize} onPage={setPage} onPageSize={setPageSize} pageSizeOptions={[12, 24, 48]} />
+            )}
 
             {editing && (
                 <div className="admin-modal-overlay" onClick={close}>

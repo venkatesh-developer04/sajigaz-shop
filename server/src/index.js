@@ -57,7 +57,7 @@ app.post('/api/webhook', express.raw({ type: 'application/json' }), (req, res) =
         } else if (event.event === 'payment.failed') {
             db.prepare(
                 `UPDATE orders SET status = 'failed', updated_at = datetime('now')
-                 WHERE razorpay_order_id = ? AND status = 'created'`
+                 WHERE razorpay_order_id = ? AND status = 'lead'`
             ).run(rzpOrderId)
         }
     }
@@ -124,7 +124,7 @@ app.post('/api/orders', async (req, res) => {
                 (receipt, razorpay_order_id, amount, currency, status,
                  customer_name, customer_phone, customer_address, customer_pincode, occasion, delivery_date,
                  items_json, subtotal, delivery, total)
-             VALUES (?, ?, ?, 'INR', 'created', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+             VALUES (?, ?, ?, 'INR', 'lead', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
         ).run(
             receipt, rzpOrder.id, amountPaise,
             customer.name || null, customer.phone || null, customer.address || null,
@@ -160,7 +160,7 @@ app.post('/api/payments/verify', (req, res) => {
         .digest('hex')
 
     if (expected !== razorpay_signature) {
-        db.prepare(`UPDATE orders SET status = 'failed', updated_at = datetime('now') WHERE razorpay_order_id = ? AND status = 'created'`).run(razorpay_order_id)
+        db.prepare(`UPDATE orders SET status = 'failed', updated_at = datetime('now') WHERE razorpay_order_id = ? AND status = 'lead'`).run(razorpay_order_id)
         return res.status(400).json({ error: 'Payment verification failed' })
     }
 
@@ -208,7 +208,7 @@ app.get('/api/admin/orders/:id', requireAdmin, (req, res) => {
 // ---- Admin: update status (e.g. mark fulfilled) ----
 app.patch('/api/admin/orders/:id', requireAdmin, (req, res) => {
     const { status } = req.body || {}
-    const allowed = ['created', 'paid', 'failed', 'fulfilled']
+    const allowed = ['lead', 'paid', 'failed', 'fulfilled']
     if (!allowed.includes(status)) return res.status(400).json({ error: 'Invalid status' })
     const result = db.prepare(`UPDATE orders SET status = ?, updated_at = datetime('now') WHERE id = ?`).run(status, req.params.id)
     if (result.changes === 0) return res.status(404).json({ error: 'Not found' })

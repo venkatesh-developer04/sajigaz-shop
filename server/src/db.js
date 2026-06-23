@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS orders (
     razorpay_signature TEXT,
     amount INTEGER NOT NULL,            -- in paise
     currency TEXT NOT NULL DEFAULT 'INR',
-    status TEXT NOT NULL DEFAULT 'created', -- created | paid | failed | fulfilled
+    status TEXT NOT NULL DEFAULT 'lead', -- lead | paid | failed | fulfilled
     customer_name TEXT,
     customer_phone TEXT,
     customer_address TEXT,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS orders (
     subtotal INTEGER NOT NULL,          -- in rupees
     delivery INTEGER NOT NULL,          -- in rupees
     total INTEGER NOT NULL,             -- in rupees
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    lead_at TEXT NOT NULL DEFAULT (datetime('now')),
     updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS idx_orders_rzp ON orders(razorpay_order_id);
@@ -54,5 +54,12 @@ CREATE TABLE IF NOT EXISTS products (
 );
 CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);
 `)
+
+// ── Migration: legacy 'created' status / created_at column → 'lead' / lead_at ──
+const orderCols = db.prepare('PRAGMA table_info(orders)').all().map((c) => c.name)
+if (orderCols.includes('created_at') && !orderCols.includes('lead_at')) {
+    db.exec('ALTER TABLE orders RENAME COLUMN created_at TO lead_at')
+}
+db.exec("UPDATE orders SET status = 'lead' WHERE status = 'created'")
 
 export default db
